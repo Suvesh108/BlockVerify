@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Anti-Counterfeit Product Identification System Using Blockchain
 
 This project implements a blockchain-based system for tracking and verifying the authenticity of products throughout the supply chain, from manufacturer to retailer to consumer.
@@ -168,3 +169,6 @@ For more information about the MIT License, visit: [https://opensource.org/licen
 
 - Ethereum community for blockchain tools and libraries
 - Bootstrap team for responsive design framework 
+=======
+# testing
+>>>>>>> origin/main

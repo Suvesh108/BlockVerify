@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Anti-Counterfeit Product System</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/modern.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-sidebar">
+                <div class="auth-sidebar-pattern"></div>
+                <div class="auth-sidebar-content">
+                    <div class="auth-sidebar-logo">
+                        BlockVerify
+                    </div>
+                    <h1 class="auth-sidebar-title">Blockchain-Based Anti-Counterfeit System</h1>
+                    <p class="auth-sidebar-text">
+                        Verify authenticity, track ownership, and ensure product integrity through our secure blockchain platform.
+                    </p>
+                </div>
+            </div>
+            <div class="auth-form">
+                <!-- Login Form -->
+                <div id="login-form">
+                    <h2 class="auth-form-title">Welcome back</h2>
+                    <p class="auth-form-subtitle">Sign in to your account to continue</p>
+                    
+                    <div id="login-alert" class="alert alert-danger" style="display: none;"></div>
+                    <div id="success-alert" class="alert alert-success" style="display: none;"></div>
+                    
+                    <form id="login">
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email</label>
+                            <div class="form-input-group">
+                                <i class="fa fa-envelope form-input-icon"></i>
+                                <input type="email" class="form-control" id="email" placeholder="youremail@example.com" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="password">Password</label>
+                            <div class="form-input-group">
+                                <i class="fa fa-lock form-input-icon"></i>
+                                <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                                <span class="password-toggle" onclick="togglePassword('password')">
+                                    <i class="fa fa-eye"></i>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="auth-options">
+                            <div>
+                                <input type="checkbox" id="remember">
+                                <label for="remember">Remember me</label>
+                            </div>
+                            <a href="#" class="forgot-password">Forgot password?</a>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                    </form>
+                    
+                    <div class="auth-divider">
+                        <div class="auth-divider-line"></div>
+                        <div class="auth-divider-text">or</div>
+                        <div class="auth-divider-line"></div>
+                    </div>
+                    
+                    <div class="auth-social">
+                        <div class="auth-social-btn">
+                            <i class="fa fa-google"></i> Google
+                        </div>
+                        <div class="auth-social-btn">
+                            <i class="fa fa-facebook"></i> Facebook
+                        </div>
+                    </div>
+                    
+                    <div class="auth-switch">
+                        <p>Don't have an account? <span id="show-signup" class="auth-switch-link">Sign up</span></p>
+                    </div>
+                </div>
+                
+                <!-- Signup Form -->
+                <div id="signup-form" style="display: none;">
+                    <h2 class="auth-form-title">Create an account</h2>
+                    <p class="auth-form-subtitle">Join the secure blockchain verification network</p>
+                    
+                    <div id="signup-alert" class="alert alert-danger" style="display: none;"></div>
+                    
+                    <form id="signup">
+                        <div class="form-group">
+                            <label class="form-label" for="fullname">Full Name</label>
+                            <div class="form-input-group">
+                                <i class="fa fa-user form-input-icon"></i>
+                                <input type="text" class="form-control" id="fullname" placeholder="John Doe" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="signup-email">Email</label>
+                            <div class="form-input-group">
+                                <i class="fa fa-envelope form-input-icon"></i>
+                                <input type="email" class="form-control" id="signup-email" placeholder="youremail@example.com" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="signup-password">Password</label>
+                            <div class="form-input-group">
+                                <i class="fa fa-lock form-input-icon"></i>
+                                <input type="password" class="form-control" id="signup-password" placeholder="Choose a strong password" required>
+                                <span class="password-toggle" onclick="togglePassword('signup-password')">
+                                    <i class="fa fa-eye"></i>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="confirm-password">Confirm Password</label>
+                            <div class="form-input-group">
+                                <i class="fa fa-lock form-input-icon"></i>
+                                <input type="password" class="form-control" id="confirm-password" placeholder="Confirm your password" required>
+                                <span class="password-toggle" onclick="togglePassword('confirm-password')">
+                                    <i class="fa fa-eye"></i>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="user-type">I am a</label>
+                            <select class="form-control" id="user-type" required>
+                                <option value="">Select user type</option>
+                                <option value="manufacturer">Manufacturer</option>
+                                <option value="seller">Seller</option>
+                                <option value="consumer">Consumer</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+                    </form>
+                    
+                    <div class="auth-switch">
+                        <p>Already have an account? <span id="show-login" class="auth-switch-link">Sign in</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/login.js"></script>
+    <script>
+        function togglePassword(id) {
+            const passwordInput = document.getElementById(id);
+            const icon = event.currentTarget.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+        
+        $(document).ready(function() {
+            // Toggle between login and signup forms
+            $('#show-signup').click(function() {
+                $('#login-form').hide();
+                $('#signup-form').show();
+            });
+            
+            $('#show-login').click(function() {
+                $('#signup-form').hide();
+                $('#login-form').show();
+            });
+            
+            // Handle login form submission
+            $('#login').submit(function(e) {
+                e.preventDefault();
+                
+                const email = $('#email').val();
+                const password = $('#password').val();
+                
+                // Call the login function from login.js
+                loginUser(email, password);
+            });
+            
+            // Handle signup form submission
+            $('#signup').submit(function(e) {
+                e.preventDefault();
+                
+                const fullname = $('#fullname').val();
+                const email = $('#signup-email').val();
+                const password = $('#signup-password').val();
+                const confirmPassword = $('#confirm-password').val();
+                const userType = $('#user-type').val();
+                
+                if (password !== confirmPassword) {
+                    $('#signup-alert').text('Passwords do not match').show();
+                    return;
+                }
+                
+                // Call the signup function from login.js
+                signupUser(fullname, email, password, userType);
+            });
+        });
+    </script>
+</body>
+</html> 

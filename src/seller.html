@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard - BlockVerify</title>
+    <link href='https://fonts.googleapis.com/css?family=Inter:400,500,600,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="css/modern.css">
+    <link rel="stylesheet" href="css/ui-components.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="navbar-brand">
+                    <i class="fas fa-cube mr-10"></i> BlockVerify
+                </a>
+                <div class="navbar-menu">
+                    <a href="index.html" class="navbar-link">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    <a href="manufacturer.html" class="navbar-link">
+                        <i class="fas fa-industry"></i> Manufacturer
+                    </a>
+                    <a href="seller.html" class="navbar-link active">
+                        <i class="fas fa-store"></i> Seller
+                    </a>
+                    <a href="consumer.html" class="navbar-link">
+                        <i class="fas fa-user"></i> Consumer
+                    </a>
+                    <a href="verifyProducts.html" class="navbar-link">
+                        <i class="fas fa-search"></i> Verify
+                    </a>
+                    <div class="user-menu">
+                        <span id="welcome-message">Welcome!</span>
+                        <a href="#" id="logout-btn" class="btn btn-outline-primary">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Dashboard Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Seller Dashboard</h1>
+            <p>Manage your inventory, receive products, and sell to consumers</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="dashboard-section">
+        <div class="container">
+            <!-- Quick Stats -->
+            <div class="quick-stats">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <i class="fas fa-cubes"></i>
+                        <h3>Products in Stock</h3>
+                    </div>
+                    <div class="stat-value" id="products-in-stock">-</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3>Products Sold</h3>
+                    </div>
+                    <div class="stat-value" id="products-sold">-</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <i class="fas fa-truck"></i>
+                        <h3>Pending Receipts</h3>
+                    </div>
+                    <div class="stat-value" id="pending-receipts">-</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Alerts</h3>
+                    </div>
+                    <div class="stat-value" id="alerts">-</div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="row mb-40">
+                <div class="col-12">
+                    <div class="tabs-container">
+                        <div class="tabs">
+                            <div class="tab active" data-tab="inventory">
+                                <i class="fas fa-cubes"></i> Inventory
+                            </div>
+                            <div class="tab" data-tab="receive-products">
+                                <i class="fas fa-truck"></i> Receive Products
+                            </div>
+                            <div class="tab" data-tab="sell-products">
+                                <i class="fas fa-shopping-cart"></i> Sell to Consumer
+                            </div>
+                        </div>
+                        
+                        <!-- Inventory Tab Content -->
+                        <div class="tab-content active" id="inventory-content">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title"><i class="fas fa-cubes"></i> Current Inventory</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="search-filters">
+                                        <div class="search-box">
+                                            <div class="input-with-icon">
+                                                <input type="text" class="form-control" id="inventory-search" placeholder="Search products...">
+                                                <i class="fas fa-search"></i>
+                                            </div>
+                                        </div>
+                                        <div class="filter-group">
+                                            <select class="form-control" id="filter-status">
+                                                <option value="all">All Status</option>
+                                                <option value="in-stock">In Stock</option>
+                                                <option value="reserved">Reserved</option>
+                                                <option value="sold">Sold</option>
+                                            </select>
+                                            <button id="refresh-inventory" class="btn btn-outline-primary btn-sm">
+                                                <i class="fas fa-sync-alt"></i> Refresh
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="table-container">
+                                        <div id="inventory-loading" class="loading-indicator">
+                                            <div class="spinner"></div>
+                                            <p>Loading inventory from blockchain...</p>
+                                        </div>
+                                        <div id="no-inventory">
+                                            <i class="fas fa-cube"></i>
+                                            <p>No products in inventory yet. Products will appear here when transferred from manufacturers.</p>
+                                        </div>
+                                        <table class="data-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Product Name</th>
+                                                    <th>Serial Number</th>
+                                                    <th>Manufacturer</th>
+                                                    <th>Received Date</th>
+                                                    <th>Status</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="inventory-table">
+                                                <!-- Inventory items will be dynamically inserted here -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    <div class="pagination">
+                                        <button class="btn btn-sm btn-outline-primary" id="prev-page" disabled>
+                                            <i class="fas fa-chevron-left"></i> Previous
+                                        </button>
+                                        <span>Page 1 of 1</span>
+                                        <button class="btn btn-sm btn-outline-primary" id="next-page" disabled>
+                                            Next <i class="fas fa-chevron-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Receive Products Tab Content -->
+                        <div class="tab-content" id="receive-products-content">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title"><i class="fas fa-truck"></i> Receive Products from Manufacturer</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title"><i class="fas fa-qrcode"></i> Scan QR Code</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <p>Scan the QR code on the product or shipment package.</p>
+                                                    <div class="qr-scanner-box">
+                                                        <i class="fas fa-camera"></i>
+                                                    </div>
+                                                    <div id="qr-result" class="text-center text-muted mt-10">
+                                                        No QR code detected yet
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-6">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title"><i class="fas fa-keyboard"></i> Manual Entry</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <p>Enter the product details manually.</p>
+                                                    <form id="receive-form">
+                                                        <div class="form-group">
+                                                            <label for="transfer-code">Transfer Code</label>
+                                                            <input type="text" class="form-control" id="transfer-code" placeholder="Enter transfer code from manufacturer">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="product-serial">Product Serial Number</label>
+                                                            <input type="text" class="form-control" id="product-serial" placeholder="Enter product serial number">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="manufacturer-id">Manufacturer ID</label>
+                                                            <input type="text" class="form-control" id="manufacturer-id" placeholder="Enter manufacturer ID">
+                                                        </div>
+                                                        <button type="button" class="btn btn-primary" id="verify-transfer-btn">
+                                                            <i class="fas fa-check-circle"></i> Verify & Receive
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row mt-40">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title"><i class="fas fa-clipboard-list"></i> Pending Transfers</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="table-container">
+                                                        <table class="data-table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Transfer ID</th>
+                                                                    <th>Manufacturer</th>
+                                                                    <th>Products Count</th>
+                                                                    <th>Date Initiated</th>
+                                                                    <th>Status</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="pending-transfers-table">
+                                                                <!-- Pending transfers will be loaded here dynamically -->
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Sell to Consumer Tab Content -->
+                        <div class="tab-content" id="sell-products-content">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title"><i class="fas fa-shopping-cart"></i> Sell Product to Consumer</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <form id="sell-form">
+                                                <div class="form-group">
+                                                    <label for="productSN">Product Serial Number</label>
+                                                    <div class="input-with-icon">
+                                                        <input type="text" class="form-control" id="productSN" placeholder="Enter product serial number">
+                                                        <i class="fas fa-barcode"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="consumerCode">Consumer Code</label>
+                                                    <div class="input-with-icon">
+                                                        <input type="text" class="form-control" id="consumerCode" placeholder="Enter consumer code">
+                                                        <i class="fas fa-user"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="salePrice">Sale Price</label>
+                                                    <div class="input-with-icon">
+                                                        <input type="number" class="form-control" id="salePrice" placeholder="Enter sale price" min="0" step="0.01">
+                                                        <i class="fas fa-dollar-sign"></i>
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary" id="sell-to-consumer-btn">
+                                                    <i class="fas fa-check-circle"></i> Complete Sale
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title"><i class="fas fa-info-circle"></i> Sale Information</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div id="product-details" style="display: none;">
+                                                        <h4>Product Details</h4>
+                                                        <div class="detail-row">
+                                                            <div>Product Name:</div>
+                                                            <div id="pd-name">-</div>
+                                                        </div>
+                                                        <div class="detail-row">
+                                                            <div>Serial Number:</div>
+                                                            <div id="pd-serial">-</div>
+                                                        </div>
+                                                        <div class="detail-row">
+                                                            <div>Manufacturer:</div>
+                                                            <div id="pd-manufacturer">-</div>
+                                                        </div>
+                                                        <div class="detail-row">
+                                                            <div>Base Price:</div>
+                                                            <div id="pd-price">-</div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="no-product-selected" class="text-center">
+                                                        <div class="empty-state-icon">
+                                                            <i class="fas fa-box-open"></i>
+                                                        </div>
+                                                        <p>Enter a product serial number to see details</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row mt-40">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title"><i class="fas fa-history"></i> Recent Sales</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="table-container">
+                                                        <table class="data-table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Date</th>
+                                                                    <th>Product</th>
+                                                                    <th>Serial Number</th>
+                                                                    <th>Consumer</th>
+                                                                    <th>Price</th>
+                                                                    <th>Transaction</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="recent-sales-table">
+                                                                <!-- Recent sales will be loaded here dynamically -->
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sale Success Modal -->
+    <div class="modal" id="saleSuccessModal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3><i class="fas fa-check-circle"></i> Sale Completed Successfully</h3>
+                <button type="button" class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center mb-24">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h4>Product Successfully Sold to Consumer</h4>
+                    <p class="mt-16">The product has been transferred to the consumer with the following details:</p>
+                </div>
+                
+                <div class="product-details">
+                    <div class="detail-row">
+                        <div>Product Name:</div>
+                        <div id="sale-product-name">-</div>
+                    </div>
+                    <div class="detail-row">
+                        <div>Serial Number:</div>
+                        <div id="sale-serial-number">-</div>
+                    </div>
+                    <div class="detail-row">
+                        <div>Price:</div>
+                        <div id="sale-price">-</div>
+                    </div>
+                    <div class="detail-row">
+                        <div>Consumer Code:</div>
+                        <div id="sale-consumer-code">-</div>
+                    </div>
+                    <div class="detail-row">
+                        <div>Transaction Hash:</div>
+                        <div id="sale-tx-hash">-</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" id="print-receipt">
+                    <i class="fas fa-print"></i> Print Receipt
+                </button>
+                <button type="button" class="btn btn-primary close-modal">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.3.5/dist/web3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@truffle/contract@4.3.19/dist/truffle-contract.min.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/seller.js"></script>
+    <script src="js/app.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // Initialize the blockchain app with seller type
+            BlockchainApp.init('seller');
+            
+            // Initialize seller app
+            SellerApp.initializeStats();
+            
+            // Display user information
+            const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+            if (currentUser) {
+                $('#welcome-message').text('Welcome, ' + currentUser.name + '!');
+            } else {
+                window.location.href = 'login.html';
+            }
+            
+            // Event handlers
+            $('#logout-btn').click(function() {
+                logoutUser();
+            });
+            
+            // Tab navigation
+            $('.tab').click(function() {
+                const tabId = $(this).data('tab');
+                
+                // Update active tab
+                $('.tab').removeClass('active');
+                $(this).addClass('active');
+                
+                // Show corresponding content
+                $('.tab-content').hide();
+                $('#' + tabId + '-content').show();
+            });
+            
+            // Close modal buttons
+            $('.close-modal').on('click', function() {
+                $('.modal').hide();
+            });
+            
+            // Close modal if clicking outside of it
+            $(window).on('click', function(event) {
+                if ($(event.target).is('.modal')) {
+                    $('.modal').hide();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

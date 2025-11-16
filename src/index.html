@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BlockVerify - A blockchain-based anti-counterfeit product verification system ensuring authenticity across the entire supply chain.">
+    <title>BlockVerify - Anti-Counterfeit Product System</title>
+    <link href='https://fonts.googleapis.com/css?family=Inter:400,500,600,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="css/modern.css">
+    <link rel="stylesheet" href="css/ui-components.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="navbar-brand">
+                    <i class="fas fa-cube mr-10"></i> BlockVerify
+                </a>
+                <div class="navbar-menu">
+                    <a href="index.html" class="navbar-link active">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    <a href="manufacturer.html" class="navbar-link">
+                        <i class="fas fa-industry"></i> Manufacturer
+                    </a>
+                    <a href="seller.html" class="navbar-link">
+                        <i class="fas fa-store"></i> Seller
+                    </a>
+                    <a href="consumer.html" class="navbar-link">
+                        <i class="fas fa-user"></i> Consumer
+                    </a>
+                    <a href="verifyProducts.html" class="navbar-link">
+                        <i class="fas fa-search"></i> Verify
+                    </a>
+                    <a href="login.html" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="hero-title">Secure Product Verification Using Blockchain</h1>
+                    <p class="hero-description">
+                        BlockVerify provides end-to-end product authenticity verification, 
+                        eliminating counterfeits from the supply chain through immutable blockchain records.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="verifyProducts.html" class="btn hero-verify-btn">
+                            <i class="fas fa-qrcode mr-10"></i> Verify a Product
+                        </a>
+                        <a href="#how-it-works" class="btn btn-outline-primary hero-learn-btn">
+                            <i class="fas fa-info-circle mr-10"></i> Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="dashboard-section">
+        <div class="container">
+            <h2 class="text-center mb-10">How It Works</h2>
+            <p class="text-center section-intro">
+                Our blockchain-based system ensures end-to-end traceability of products
+                across the entire supply chain
+            </p>
+            
+            <div class="row mt-40">
+                <div class="col-4">
+                    <div class="card text-center">
+                        <div class="stat-header centered-stat-header">
+                            <i class="fas fa-industry"></i>
+                        </div>
+                        <h3 class="card-title">Step 1: Manufacturer Registration</h3>
+                        <p>
+                            Manufacturers register new products on the blockchain with unique identifiers, creating a permanent and verifiable record of origin.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-4">
+                    <div class="card text-center">
+                        <div class="stat-header centered-stat-header">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <h3 class="card-title">Step 2: Seller Verification</h3>
+                        <p>
+                            Authorized sellers confirm receipt and transfer ownership of products through secure blockchain transactions, ensuring chain of custody.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-4">
+                    <div class="card text-center">
+                        <div class="stat-header centered-stat-header">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h3 class="card-title">Step 3: Consumer Authentication</h3>
+                        <p>
+                            Consumers verify product authenticity by scanning QR codes or entering product serial numbers, instantly revealing the full product history.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- User Roles Section -->
+    <section class="dashboard-section user-roles-section">
+        <div class="container">
+            <h2 class="text-center mb-10">User Roles</h2>
+            <p class="text-center section-intro">
+                Our platform connects all stakeholders in the supply chain
+            </p>
+            
+            <div class="row">
+                <div class="col-4">
+                    <div class="card">
+                        <img src="https://img.freepik.com/free-vector/factory-workers-robots-automated-assembly-line_107791-11224.jpg" alt="Manufacturer" class="card-img">
+                        <div class="card-body">
+                            <h3 class="card-title">Manufacturer</h3>
+                            <p>Register new products on the blockchain with secure identifiers and track them throughout the supply chain.</p>
+                            <a href="manufacturer.html" class="btn btn-primary btn-block mt-20">
+                                <i class="fas fa-industry mr-10"></i> Manufacturer Portal
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-4">
+                    <div class="card">
+                        <img src="https://img.freepik.com/free-vector/shop-with-sign-we-are-open_23-2148562565.jpg" alt="Seller" class="card-img">
+                        <div class="card-body">
+                            <h3 class="card-title">Seller</h3>
+                            <p>Verify incoming products and confirm ownership transfer when selling products to consumers.</p>
+                            <a href="seller.html" class="btn btn-primary btn-block mt-20">
+                                <i class="fas fa-store mr-10"></i> Seller Portal
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-4">
+                    <div class="card">
+                        <img src="https://img.freepik.com/free-vector/ecommerce-web-page-concept-illustration_114360-8204.jpg" alt="Consumer" class="card-img">
+                        <div class="card-body">
+                            <h3 class="card-title">Consumer</h3>
+                            <p>Verify product authenticity, view purchase history, and ensure you're buying genuine products.</p>
+                            <a href="consumer.html" class="btn btn-primary btn-block mt-20">
+                                <i class="fas fa-user mr-10"></i> Consumer Portal
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <div class="container">
+            <h2 class="text-center mb-10">The Benefits</h2>
+            <p class="text-center section-intro">
+                Why blockchain is the perfect solution for anti-counterfeit measures
+            </p>
+            
+            <div class="row">
+                <div class="col-6">
+                    <div class="benefit-item">
+                        <div class="stat-header">
+                            <i class="fas fa-shield-alt"></i>
+                            <h3>Immutable Records</h3>
+                        </div>
+                        <p>Once recorded on the blockchain, product information cannot be altered or tampered with.</p>
+                    </div>
+                    
+                    <div class="benefit-item mt-40">
+                        <div class="stat-header">
+                            <i class="fas fa-eye"></i>
+                            <h3>Transparency</h3>
+                        </div>
+                        <p>Complete visibility of the product journey from manufacturer to consumer.</p>
+                    </div>
+                </div>
+                
+                <div class="col-6">
+                    <div class="benefit-item">
+                        <div class="stat-header">
+                            <i class="fas fa-bolt"></i>
+                            <h3>Real-time Verification</h3>
+                        </div>
+                        <p>Instant verification of product authenticity without needing to contact manufacturers.</p>
+                    </div>
+                    
+                    <div class="benefit-item mt-40">
+                        <div class="stat-header">
+                            <i class="fas fa-lock"></i>
+                            <h3>Secure Transactions</h3>
+                        </div>
+                        <p>Cryptographically secure ownership transfers that cannot be forged or duplicated.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Security Section -->
+    <section class="security-section">
+        <div class="container">
+            <h2 class="section-title">Security & Privacy</h2>
+            <p class="text-center section-intro">
+                How we keep your data safe and secure
+            </p>
+            
+            <div class="row">
+                <div class="col-4">
+                    <div class="card card-full-height">
+                        <div class="security-icon-wrapper">
+                            <i class="fa fa-lock security-icon"></i>
+                        </div>
+                        <h3 class="card-title">Blockchain Security</h3>
+                        <p>
+                            All product data is secured by advanced cryptography on the Ethereum blockchain, making it impossible to alter once recorded.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-4">
+                    <div class="card card-full-height">
+                        <div class="security-icon-wrapper">
+                            <i class="fa fa-user-secret security-icon"></i>
+                        </div>
+                        <h3 class="card-title">Data Privacy</h3>
+                        <p>
+                            Consumer information is protected through secure authentication and encrypted storage. Your personal data is never shared with third parties.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-4">
+                    <div class="card card-full-height">
+                        <div class="security-icon-wrapper">
+                            <i class="fa fa-shield security-icon"></i>
+                        </div>
+                        <h3 class="card-title">Secure Verification</h3>
+                        <p>
+                            Our verification process includes rate limiting, input validation, and protection against common web vulnerabilities like XSS and CSRF.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">Ready to Verify a Product?</h2>
+            <p class="cta-description">
+                Use our simple verification tool to check product authenticity in seconds
+            </p>
+            <a href="verifyProducts.html" class="btn cta-button">Verify Now</a>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-4">
+                    <h3 class="footer-heading">
+                        <i class="fas fa-cube mr-10"></i> BlockVerify
+                    </h3>
+                    <p class="footer-text">
+                        Securing product authenticity through blockchain technology. 
+                        Our mission is to eliminate counterfeits and build trust in global commerce.
+                    </p>
+                </div>
+                
+                <div class="col-4 text-center">
+                    <h4 class="footer-links-heading">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li class="footer-link-item"><a href="#" class="footer-link">About Us</a></li>
+                        <li class="footer-link-item"><a href="#how-it-works" class="footer-link">How It Works</a></li>
+                        <li class="footer-link-item"><a href="#" class="footer-link">Pricing</a></li>
+                        <li class="footer-link-item"><a href="#" class="footer-link">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-4 text-right">
+                    <h4 class="footer-links-heading">Contact Us</h4>
+                    <p class="contact-info">
+                        <i class="fas fa-envelope mr-10"></i> info@blockverify.io
+                    </p>
+                    <p class="contact-info">
+                        <i class="fas fa-phone mr-10"></i> +91 9876543210
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-divider">
+                <p>&copy; 2024 BlockVerify. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Hero buttons fixed with more direct approach
+            // Verify button uses its natural href now
+            
+            // Learn More button smooth scroll
+            $('.hero-learn-btn').click(function(e) {
+                e.preventDefault();
+                var howItWorksSection = document.getElementById('how-it-works');
+                if (howItWorksSection) {
+                    howItWorksSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+            
+            // General smooth scrolling for other anchor links
+            $('a[href^="#"]:not(.hero-learn-btn)').on('click', function(event) {
+                var targetId = this.getAttribute('href');
+                if(targetId !== '#') {
+                    var target = document.querySelector(targetId);
+                    if(target) {
+                        event.preventDefault();
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

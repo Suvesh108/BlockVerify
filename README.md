@@ -183,5 +183,4 @@ For more information about the MIT License, visit: [https://opensource.org/licen
 ## Acknowledgments
 
 - Ethereum community for blockchain tools and libraries
-- Bootstrap team for responsive design framework 
 

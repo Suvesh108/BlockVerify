@@ -4,612 +4,332 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manufacturer Dashboard - BlockVerify</title>
-    <link href='https://fonts.googleapis.com/css?family=Inter:400,500,600,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="css/modern.css">
-    <link rel="stylesheet" href="css/manufacturer.css">
-    <link rel="stylesheet" href="css/ui-components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
-    <!-- Navigation -->
-    <header>
-        <div class="container">
-            <nav class="navbar">
+    <div style="display: flex; min-height: 100vh;">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div style="margin-bottom: 3rem;">
                 <a href="index.html" class="navbar-brand">
-                    <i class="fas fa-cube mr-10"></i> BlockVerify
+                    <i class="fas fa-cube"></i> BlockVerify
                 </a>
-                <div class="navbar-menu">
-                    <a href="index.html" class="navbar-link">
-                        <i class="fas fa-home"></i> Home
-                    </a>
-                    <a href="manufacturer.html" class="navbar-link active">
-                        <i class="fas fa-industry"></i> Manufacturer
-                    </a>
-                    <a href="seller.html" class="navbar-link">
-                        <i class="fas fa-store"></i> Seller
-                    </a>
-                    <a href="consumer.html" class="navbar-link">
-                        <i class="fas fa-user"></i> Consumer
-                    </a>
-                    <a href="verifyProducts.html" class="navbar-link">
-                        <i class="fas fa-search"></i> Verify
-                    </a>
-                    <div class="user-menu">
-                        <span id="welcome-message">Welcome!</span>
-                        <a href="#" id="logout-btn" class="btn btn-outline-primary">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </a>
-                    </div>
-                </div>
+            </div>
+            
+            <nav>
+                <a href="#" class="nav-link active" id="nav-dashboard">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a href="#" class="nav-link" id="nav-add-product">
+                    <i class="fas fa-plus-circle"></i> Add Product
+                </a>
+                <a href="#" class="nav-link" id="nav-products">
+                    <i class="fas fa-list"></i> My Products
+                </a>
+                <a href="#" class="nav-link" id="nav-history">
+                    <i class="fas fa-history"></i> History
+                </a>
             </nav>
-        </div>
-    </header>
-
-    <!-- Dashboard Header -->
-    <section class="page-header">
-        <div class="container">
-            <h1>Manufacturer Dashboard</h1>
-            <p>Register new products and manage your supply chain securely on the blockchain</p>
-        </div>
-    </section>
-    
-    <!-- Main Content -->
-    <section class="dashboard-section">
-        <div class="container">
-            <!-- Quick Stats -->
-            <div class="quick-stats">
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <i class="fas fa-box"></i>
-                        <h3>Products Registered</h3>
-                    </div>
-                    <div class="stat-value" id="products-registered">-</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <i class="fas fa-exchange-alt"></i>
-                        <h3>Transfers to Sellers</h3>
-                    </div>
-                    <div class="stat-value" id="transfers-to-sellers">-</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <i class="fas fa-check-circle"></i>
-                        <h3>Verifications</h3>
-                    </div>
-                    <div class="stat-value" id="verifications">-</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <h3>Potential Issues</h3>
-                    </div>
-                    <div class="stat-value" id="potential-issues">-</div>
-                </div>
-            </div>
-
-            <!-- Register New Product -->
-            <div class="row mb-40">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title"><i class="fas fa-plus-circle"></i> Register New Product</h3>
-                        </div>
-                        <div class="card-body">
-                            <form id="add-product-form">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="product-name">Product Name</label>
-                                            <input type="text" class="form-control" id="product-name" placeholder="Enter product name" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="product-brand">Brand</label>
-                                            <input type="text" class="form-control" id="product-brand" placeholder="Enter brand name" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label for="product-price">Price (USD)</label>
-                                            <div class="input-with-icon">
-                                                <input type="number" class="form-control" id="product-price" min="0" step="0.01" placeholder="0.00" required>
-                                                <i class="fas fa-dollar-sign"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label for="product-category">Category</label>
-                                            <select class="form-control" id="product-category" required>
-                                                <option value="">Select Category</option>
-                                                <option value="electronics">Electronics</option>
-                                                <option value="fashion">Fashion & Apparel</option>
-                                                <option value="health">Health & Beauty</option>
-                                                <option value="automotive">Automotive</option>
-                                                <option value="home">Home & Garden</option>
-                                                <option value="other">Other</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label for="manufacture-date">Manufacture Date</label>
-                                            <div class="input-with-icon">
-                                                <input type="date" class="form-control" id="manufacture-date" required>
-                                                <i class="fas fa-calendar-alt"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label>Product Image</label>
-                                            <div class="file-upload">
-                                                <input type="file" id="product-image" accept="image/*">
-                                                <label for="product-image" class="btn btn-outline-primary">
-                                                    <i class="fas fa-upload"></i> Choose Image
-                                                </label>
-                                                <span class="file-info">No file chosen</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="batch-size">Batch Size (Number of Units)</label>
-                                            <div class="input-with-icon">
-                                                <input type="number" class="form-control" id="batch-size" min="1" value="1" required>
-                                                <i class="fas fa-cubes"></i>
-                                            </div>
-                                            <small class="text-muted">Number of individual products to register in this batch</small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Hidden field for product SN -->
-                                <input type="hidden" id="product-sn">
-                                <div class="row">
-                                    <div class="col-12 text-right">
-                                        <button type="reset" class="btn btn-outline-primary">
-                                            <i class="fas fa-undo"></i> Clear Form
-                                        </button>
-                                        <button type="submit" class="btn btn-primary" id="register-product">
-                                            <i class="fas fa-plus-circle"></i> Register Product on Blockchain
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+            
+            <div style="margin-top: auto; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--primary-color); display: flex; align-items: center; justify-content: center; font-weight: bold; color: #0f172a;" id="user-avatar">M</div>
+                    <div>
+                        <div style="font-weight: 600; color: white;" id="user-name">Manufacturer</div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary);" id="user-email"></div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Registered Products Section -->
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-header">
-                        <h2><i class="fas fa-clipboard-list"></i> Your Registered Products</h2>
-                        <button id="refresh-products" class="btn btn-outline-primary btn-sm">
-                            <i class="fas fa-sync-alt"></i> Refresh
-                        </button>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="search-filters">
-                                <div class="search-box">
-                                    <div class="input-with-icon">
-                                        <input type="text" class="form-control" id="search-products" placeholder="Search products...">
-                                        <i class="fas fa-search"></i>
-                                    </div>
-                                </div>
-                                <div class="filter-group">
-                                    <select class="form-control" id="filter-status">
-                                        <option value="all">All Status</option>
-                                        <option value="registered">Registered</option>
-                                        <option value="transferred">Transferred</option>
-                                        <option value="sold">Sold</option>
-                                    </select>
-                                </div>
-                            </div>
-                            
-                            <div class="table-container">
-                                <div id="product-loading" class="loading-indicator">
-                                    <div class="spinner"></div>
-                                    <p>Loading products from blockchain...</p>
-                                </div>
-                                <div id="no-products">
-                                    <i class="fas fa-cube"></i>
-                                    <p>No products registered yet. Use the form above to register your first product.</p>
-                                </div>
-                                <table class="data-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Product Name</th>
-                                            <th>Serial Number</th>
-                                            <th>Brand</th>
-                                            <th>Price</th>
-                                            <th>Category</th>
-                                            <th>Manufacture Date</th>
-                                            <th>Status</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="product-table">
-                                        <!-- Product rows will be dynamically inserted here -->
-                                    </tbody>
-                                </table>
-                            </div>
-                            
-                            <div class="pagination">
-                                <button class="btn btn-sm btn-outline-primary" id="prev-page" disabled>
-                                    <i class="fas fa-chevron-left"></i> Previous
-                                </button>
-                                <span>Page 1 of 1</span>
-                                <button class="btn btn-sm btn-outline-primary" id="next-page" disabled>
-                                    Next <i class="fas fa-chevron-right"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Seller Management Section -->
-            <div class="row mt-40">
-                <div class="col-12">
-                    <div class="section-header">
-                        <h2><i class="fas fa-users"></i> Seller Management</h2>
-                    </div>
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title"><i class="fas fa-handshake"></i> Authorized Sellers</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-container">
-                                        <div id="sellers-loading" class="loading-indicator">
-                                            <div class="spinner"></div>
-                                            <p>Loading authorized sellers...</p>
-                                        </div>
-                                        <div id="no-sellers">
-                                            <i class="fas fa-users"></i>
-                                            <p>No authorized sellers yet. Use the form to add your first seller.</p>
-                                        </div>
-                                        <table class="data-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Seller Name</th>
-                                                    <th>Seller ID</th>
-                                                    <th>Authorization Date</th>
-                                                    <th>Status</th>
-                                                    <th>Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="sellers-table">
-                                                <!-- Sellers will be loaded here dynamically -->
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title"><i class="fas fa-user-plus"></i> Add New Seller</h3>
-                                </div>
-                                <div class="card-body">
-                                    <form id="add-seller-form">
-                                        <div class="form-group">
-                                            <label for="seller-name">Seller Name</label>
-                                            <input type="text" class="form-control" id="seller-name" placeholder="Enter seller name" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="seller-email">Email Address</label>
-                                            <div class="input-with-icon">
-                                                <input type="email" class="form-control" id="seller-email" placeholder="Enter seller email" required>
-                                                <i class="fas fa-envelope"></i>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="seller-address">Blockchain Address</label>
-                                            <div class="input-with-icon">
-                                                <input type="text" class="form-control" id="seller-address" placeholder="Enter blockchain address">
-                                                <i class="fas fa-link"></i>
-                                            </div>
-                                            <small class="text-muted">Optional - Generate automatically if left blank</small>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary btn-block" id="add-seller-btn">
-                                            <i class="fas fa-plus-circle"></i> Add Seller
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Product Registration Modal -->
-    <div class="modal" id="registrationSuccessModal">
-        <div class="modal-backdrop"></div>
-        <div class="modal-container">
-            <div class="modal-header">
-                <h3><i class="fas fa-check-circle"></i> Product Registration Successful</h3>
-                <button type="button" class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="text-center mb-24">
-                    <div class="success-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <h4>Products Successfully Registered on Blockchain</h4>
-                    <p class="mt-16">Your products have been registered with the following details:</p>
-                </div>
-                
-                <div class="product-details">
-                    <div class="detail-row">
-                        <div>Product Name:</div>
-                        <div id="reg-product-name">Premium Headphones</div>
-                    </div>
-                    <div class="detail-row">
-                        <div>Batch Size:</div>
-                        <div id="reg-batch-size">10 units</div>
-                    </div>
-                    <div class="detail-row">
-                        <div>Serial Number Range:</div>
-                        <div id="reg-serial-range">SN1001 - SN1010</div>
-                    </div>
-                    <div class="detail-row">
-                        <div>Transaction Hash:</div>
-                        <div id="reg-tx-hash">0x8a35b24a01ce11d5fc0efcabcdef5d31b0a649cdf2c8e20a7c9f265ac7f1f4b9</div>
-                    </div>
-                </div>
-                
-                <div class="mb-24">
-                    <h5>What's Next?</h5>
-                    <ul>
-                        <li>Download QR codes for each product in the batch</li>
-                        <li>Download consumer codes that will be provided with each product</li>
-                        <li>Apply the QR codes to your product packaging</li>
-                        <li>Transfer the products to authorized sellers when ready</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn btn-outline-primary" download>
-                    <i class="fas fa-qrcode"></i> Download QR Codes
+                <a href="index.html" class="nav-link" style="color: var(--danger-color);">
+                    <i class="fas fa-sign-out-alt"></i> Logout
                 </a>
-                <a href="#" class="btn btn-outline-primary" download>
-                    <i class="fas fa-file-download"></i> Download Consumer Codes
-                </a>
-                <button type="button" class="btn btn-primary close-modal">Done</button>
             </div>
-        </div>
-    </div>
+        </aside>
 
-    <!-- Sell Product Modal -->
-    <div id="sellProductModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-exchange-alt"></i> Transfer Product to Seller</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="sell-form">
-                    <div class="form-group">
-                        <label for="productSN">Product Serial Number</label>
-                        <input type="text" class="form-control" id="productSN" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="sellerCode">Seller Code</label>
-                        <input type="text" class="form-control" id="sellerCode" placeholder="Enter seller code" required>
-                    </div>
-                    <div class="form-group text-right mt-24">
-                        <button type="button" id="cancel-sell" class="btn btn-outline-primary">
-                            <i class="fas fa-times"></i> Cancel
-                        </button>
-                        <button type="submit" class="btn btn-primary btn-sell-to-seller">
-                            <i class="fas fa-check"></i> Confirm Transfer
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- View Seller Modal -->
-    <div id="viewSellerModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-user"></i> Seller Details</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="seller-details">
-                    <div class="detail-row">
-                        <div>Name:</div>
-                        <div id="seller-detail-name"></div>
-                    </div>
-                    <div class="detail-row">
-                        <div>Seller ID:</div>
-                        <div id="seller-detail-id"></div>
-                    </div>
-                    <div class="detail-row">
-                        <div>Email:</div>
-                        <div id="seller-detail-email"></div>
-                    </div>
-                    <div class="detail-row">
-                        <div>Blockchain Address:</div>
-                        <div id="seller-detail-address"></div>
-                    </div>
-                    <div class="detail-row">
-                        <div>Authorization Date:</div>
-                        <div id="seller-detail-date"></div>
-                    </div>
-                    <div class="detail-row">
-                        <div>Status:</div>
-                        <div id="seller-detail-status"></div>
-                    </div>
+        <!-- Main Content -->
+        <main class="main-content">
+            <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; position: static; padding: 0; background: transparent; border: none;">
+                <div>
+                    <h1>Manufacturer Dashboard</h1>
+                    <p>Manage your products and supply chain.</p>
                 </div>
-                
-                <div class="mb-24">
-                    <h5><i class="fas fa-box"></i> Products Transferred to Seller</h5>
-                    <p class="text-muted">No products have been transferred to this seller yet.</p>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary">
-                    <i class="fas fa-envelope"></i> Contact Seller
+                <button class="btn btn-primary btn-register-product" id="header-register-btn">
+                    <i class="fas fa-plus"></i> Register New Product
                 </button>
-                <button type="button" class="btn btn-primary close-modal">Close</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Manage Seller Modal -->
-    <div id="manageSellerModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-user-cog"></i> Manage Seller</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="seller-details mb-24">
-                    <div class="detail-row">
-                        <div>Name:</div>
-                        <div id="manage-seller-name"></div>
-                    </div>
-                    <div class="detail-row">
-                        <div>Seller ID:</div>
-                        <div id="manage-seller-id"></div>
-                    </div>
-                </div>
-                
-                <form id="manage-seller-form">
-                    <input type="hidden" id="manage-seller-original-id">
-                    
-                    <div class="form-group">
-                        <label for="manage-seller-email">Email Address</label>
-                        <div class="input-with-icon">
-                            <input type="email" class="form-control" id="manage-seller-email" required>
-                            <i class="fas fa-envelope"></i>
+            </header>
+
+            <!-- Dashboard View -->
+            <div id="view-dashboard" class="view-section">
+                <!-- Stats Grid -->
+                <div class="row" style="margin-bottom: 2rem;">
+                    <div class="col-4 fade-in-up">
+                        <div class="card">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                                <div>
+                                    <h3 id="products-registered" style="font-size: 2.5rem; margin-bottom: 0;">0</h3>
+                                    <p style="margin: 0;">Total Products</p>
+                                </div>
+                                <div style="padding: 1rem; background: rgba(var(--primary-hue), 80%, 60%, 0.1); border-radius: var(--radius-md); color: var(--primary-color);">
+                                    <i class="fas fa-box fa-lg"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <div class="col-4 fade-in-up delay-100">
+                        <div class="card">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                                <div>
+                                    <h3 id="transfers-to-sellers" style="font-size: 2.5rem; margin-bottom: 0;">0</h3>
+                                    <p style="margin: 0;">Sold to Retailers</p>
+                                </div>
+                                <div style="padding: 1rem; background: rgba(var(--secondary-hue), 80%, 60%, 0.1); border-radius: var(--radius-md); color: var(--secondary-color);">
+                                    <i class="fas fa-truck fa-lg"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 fade-in-up delay-200">
+                        <div class="card">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                                <div>
+                                    <h3 id="products-in-stock" style="font-size: 2.5rem; margin-bottom: 0;">0</h3>
+                                    <p style="margin: 0;">In Stock</p>
+                                </div>
+                                <div style="padding: 1rem; background: rgba(var(--success-color), 0.1); border-radius: var(--radius-md); color: var(--success-color);">
+                                    <i class="fas fa-warehouse fa-lg"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Products Table -->
+                <div class="card fade-in-up delay-300">
+                    <h3 style="margin-bottom: 1.5rem;">Recent Products</h3>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; color: var(--text-secondary);">
+                            <thead>
+                                <tr style="border-bottom: 1px solid var(--border-color); text-align: left;">
+                                    <th style="padding: 1rem;">Product ID</th>
+                                    <th style="padding: 1rem;">Name</th>
+                                    <th style="padding: 1rem;">Brand</th>
+                                    <th style="padding: 1rem;">Category</th>
+                                    <th style="padding: 1rem;">Price</th>
+                                    <th style="padding: 1rem;">Status</th>
+                                    <th style="padding: 1rem;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="product-table">
+                                <!-- Products will be loaded here dynamically -->
+                                <tr>
+                                    <td colspan="6" style="text-align: center; padding: 2rem;">Loading products...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Product View -->
+            <div id="view-add-product" class="view-section" style="display: none;">
+                <div class="card fade-in-up">
+                    <h3 style="margin-bottom: 1.5rem;">Register New Product</h3>
+                    <form id="add-product-form">
+                        <div class="row">
+                            <div class="col-6" style="margin-bottom: 1rem;">
+                                <label style="display: block; margin-bottom: 0.5rem;">Product Name</label>
+                                <input type="text" id="product-name" class="form-control" placeholder="e.g. Premium Sneaker" required style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: white;">
+                            </div>
+                            <div class="col-6" style="margin-bottom: 1rem;">
+                                <label style="display: block; margin-bottom: 0.5rem;">Brand</label>
+                                <input type="text" id="product-brand" class="form-control" placeholder="e.g. Nike" required style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: white;">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6" style="margin-bottom: 1rem;">
+                                <label style="display: block; margin-bottom: 0.5rem;">Price (₹)</label>
+                                <input type="number" id="product-price" class="form-control" placeholder="e.g. 150" required style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: white;">
+                            </div>
+                            <div class="col-6" style="margin-bottom: 1rem;">
+                                <label style="display: block; margin-bottom: 0.5rem;">Category</label>
+                                <select id="product-category" class="form-control" style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: white;">
+                                    <option value="Footwear" style="color: black;">Footwear</option>
+                                    <option value="Electronics" style="color: black;">Electronics</option>
+                                    <option value="Apparel" style="color: black;">Apparel</option>
+                                    <option value="Accessories" style="color: black;">Accessories</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6" style="margin-bottom: 1rem;">
+                                <label style="display: block; margin-bottom: 0.5rem;">Quantity</label>
+                                <input type="number" id="product-quantity" class="form-control" value="1" min="1" required style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: white;">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">
+                            <i class="fas fa-check"></i> Register Product
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- My Products View -->
+            <div id="view-products" class="view-section" style="display: none;">
+                <div class="card fade-in-up">
+                    <h3 style="margin-bottom: 1.5rem;">All Products</h3>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; color: var(--text-secondary);">
+                            <thead>
+                                <tr style="border-bottom: 1px solid var(--border-color); text-align: left;">
+                                    <th style="padding: 1rem;">Product ID</th>
+                                    <th style="padding: 1rem;">Name</th>
+                                    <th style="padding: 1rem;">Brand</th>
+                                    <th style="padding: 1rem;">Category</th>
+                                    <th style="padding: 1rem;">Price</th>
+                                    <th style="padding: 1rem;">Status</th>
+                                    <th style="padding: 1rem;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="all-products-table">
+                                <!-- Will be populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History View -->
+            <div id="view-history" class="view-section" style="display: none;">
+                <div class="card fade-in-up">
+                    <h3 style="margin-bottom: 1.5rem;">Transaction History</h3>
+                    <p style="color: var(--text-secondary);">Recent blockchain transactions will appear here.</p>
+                    <div id="history-list">
+                        <!-- History items will be loaded here -->
+                        <div style="padding: 1rem; border-bottom: 1px solid var(--border-light);">
+                            <div style="display: flex; justify-content: space-between;">
+                                <strong>System Initialized</strong>
+                                <span style="font-size: 0.8rem; color: var(--text-secondary);">Just now</span>
+                            </div>
+                            <p style="margin: 0.5rem 0 0; font-size: 0.9rem;">Dashboard loaded successfully.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sell Product Modal -->
+            <div id="sellProductModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="document.getElementById('sellProductModal').style.display='none'">&times;</span>
+                    <h3 style="margin-bottom: 1.5rem;">Sell Product to Retailer</h3>
+                    <form id="sell-form">
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; margin-bottom: 0.5rem;">Product Serial Number</label>
+                            <input type="text" id="productSN" class="form-control" readonly style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: white;">
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; margin-bottom: 0.5rem;">Retailer Code / ID</label>
+                            <input type="text" id="sellerCode" class="form-control" placeholder="e.g. SELL001" required style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: white;">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sell-to-seller" style="width: 100%;">
+                            Confirm Transfer
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- View Seller Modal -->
+            <div id="viewSellerModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="document.getElementById('viewSellerModal').style.display='none'">&times;</span>
+                    <h3 style="margin-bottom: 1.5rem;">Seller Details</h3>
+                    <div style="margin-bottom: 1rem;">
+                        <strong>Name:</strong> <span id="seller-detail-name"></span>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <strong>ID:</strong> <span id="seller-detail-id"></span>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <strong>Email:</strong> <span id="seller-detail-email"></span>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <strong>Address:</strong> <span id="seller-detail-address" style="word-break: break-all;"></span>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <strong>Authorized Date:</strong> <span id="seller-detail-date"></span>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <strong>Status:</strong> <span id="seller-detail-status"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Manage Seller Modal -->
+            <div id="manageSellerModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="document.getElementById('manageSellerModal').style.display='none'">&times;</span>
+                    <h3 style="margin-bottom: 1.5rem;">Manage Seller</h3>
+                    <div style="margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color);">
+                        <h4 id="manage-seller-name" style="margin-bottom: 0.5rem;">Seller Name</h4>
+                        <p id="manage-seller-id" style="color: var(--text-secondary); margin: 0;">ID</p>
+                        <input type="hidden" id="manage-seller-original-id">
+                    </div>
                     
-                    <div class="form-group">
-                        <label for="manage-seller-status">Status</label>
-                        <select class="form-control" id="manage-seller-status" required>
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; margin-bottom: 0.5rem;">Email</label>
+                        <input type="email" id="manage-seller-email" class="form-control" style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: white;">
+                    </div>
+                    
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; margin-bottom: 0.5rem;">Status</label>
+                        <select id="manage-seller-status" class="form-control" style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: white;">
                             <option value="Active">Active</option>
                             <option value="Suspended">Suspended</option>
                             <option value="Revoked">Revoked</option>
                         </select>
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="manage-seller-notes">Notes</label>
-                        <textarea class="form-control" id="manage-seller-notes" rows="3" placeholder="Add notes about this seller"></textarea>
+
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; margin-bottom: 0.5rem;">Notes</label>
+                        <textarea id="manage-seller-notes" class="form-control" rows="3" style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: white;"></textarea>
                     </div>
-                    
-                    <div class="form-group">
-                        <label>Permissions</label>
-                        <div class="checkbox-group">
-                            <div class="custom-checkbox">
-                                <input type="checkbox" id="permission-sell" checked>
-                                <label for="permission-sell">Sell Products</label>
-                            </div>
-                            <div class="custom-checkbox">
-                                <input type="checkbox" id="permission-discount" checked>
-                                <label for="permission-discount">Apply Discounts</label>
-                            </div>
-                            <div class="custom-checkbox">
-                                <input type="checkbox" id="permission-bulk">
-                                <label for="permission-bulk">Bulk Transfers</label>
-                            </div>
-                            <div class="custom-checkbox">
-                                <input type="checkbox" id="permission-api">
-                                <label for="permission-api">API Access</label>
-                            </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem;">Permissions</label>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                <input type="checkbox" id="permission-sell"> Can Sell
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                <input type="checkbox" id="permission-discount"> Can Discount
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                <input type="checkbox" id="permission-bulk"> Bulk Transfer
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                <input type="checkbox" id="permission-api"> API Access
+                            </label>
                         </div>
                     </div>
-                </form>
+
+                    <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                        <button type="button" class="btn btn-outline-danger" id="delete-seller">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary" id="cancel-manage-seller">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="save-seller-changes">Save Changes</button>
+                    </div>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-danger" id="delete-seller">
-                    <i class="fas fa-trash-alt"></i> Delete Seller
-                </button>
-                <button type="button" class="btn btn-outline-primary" id="cancel-manage-seller">Cancel</button>
-                <button type="button" class="btn btn-primary" id="save-seller-changes">
-                    <i class="fas fa-save"></i> Save Changes
-                </button>
-            </div>
-        </div>
+        </main>
     </div>
 
-    <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.3.5/dist/web3.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@truffle/contract@4.3.19/dist/truffle-contract.min.js"></script>
-    <script src="js/login.js"></script>
-    <script src="js/manufacturer.js"></script>
-    <script src="js/app.js"></script>
-    
+    <script src="assets/js/api-client.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/manufacturer.js"></script>
     <script>
-        $(document).ready(function() {
-            // Initialize the blockchain app with manufacturer type
-            BlockchainApp.init('manufacturer');
-            
-            // Initialize manufacturer app
-            ManufacturerApp.initializeStats();
-            
-            // Display user information
-            const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-            if (currentUser) {
-                $('#welcome-message').text('Welcome, ' + currentUser.name + '!');
-            } else {
-                window.location.href = 'login.html';
-            }
-            
-            // Event handlers
-            $('#logout-btn').click(function() {
-                logoutUser();
-            });
-            
-            // Modal handlers
-            $(document).on('click', '.sell-btn', function() {
-                const productSN = $(this).data('sn');
-                $('#productSN').val(productSN);
-                $('#sellProductModal').show();
-            });
-            
-            // Close modal buttons
-            $('.close-modal').on('click', function() {
-                $('.modal').hide();
-            });
-            
-            $('#cancel-sell').on('click', function() {
-                $('#sellProductModal').hide();
-            });
-            
-            // Close modal if clicking outside of it
-            $(window).on('click', function(event) {
-                if ($(event.target).is('.modal')) {
-                    $('.modal').hide();
-                }
-            });
-            
-            // File upload UI enhancement
-            $('#product-image').change(function() {
-                const fileName = this.files[0] ? this.files[0].name : 'No file chosen';
-                $('.file-info').text(fileName);
-            });
-        });
+        // App initialized in manufacturer.js
     </script>
 </body>
 </html>

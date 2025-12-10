@@ -4,469 +4,289 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seller Dashboard - BlockVerify</title>
-    <link href='https://fonts.googleapis.com/css?family=Inter:400,500,600,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="css/modern.css">
-    <link rel="stylesheet" href="css/ui-components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
-    <!-- Navigation -->
-    <header>
-        <div class="container">
-            <nav class="navbar">
+    <div style="display: flex; min-height: 100vh;">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div style="margin-bottom: 3rem;">
                 <a href="index.html" class="navbar-brand">
-                    <i class="fas fa-cube mr-10"></i> BlockVerify
+                    <i class="fas fa-cube"></i> BlockVerify
                 </a>
-                <div class="navbar-menu">
-                    <a href="index.html" class="navbar-link">
-                        <i class="fas fa-home"></i> Home
-                    </a>
-                    <a href="manufacturer.html" class="navbar-link">
-                        <i class="fas fa-industry"></i> Manufacturer
-                    </a>
-                    <a href="seller.html" class="navbar-link active">
-                        <i class="fas fa-store"></i> Seller
-                    </a>
-                    <a href="consumer.html" class="navbar-link">
-                        <i class="fas fa-user"></i> Consumer
-                    </a>
-                    <a href="verifyProducts.html" class="navbar-link">
-                        <i class="fas fa-search"></i> Verify
-                    </a>
-                    <div class="user-menu">
-                        <span id="welcome-message">Welcome!</span>
-                        <a href="#" id="logout-btn" class="btn btn-outline-primary">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </a>
-                    </div>
-                </div>
+            </div>
+            
+            <nav>
+                <a href="#" class="nav-link active" id="nav-dashboard">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a href="#" class="nav-link" id="nav-sell-product">
+                    <i class="fas fa-shopping-cart"></i> Sell Product
+                </a>
+                <a href="#" class="nav-link" id="nav-inventory">
+                    <i class="fas fa-box-open"></i> Inventory
+                </a>
+                <a href="#" class="nav-link" id="nav-history">
+                    <i class="fas fa-history"></i> History
+                </a>
             </nav>
-        </div>
-    </header>
-
-    <!-- Dashboard Header -->
-    <section class="page-header">
-        <div class="container">
-            <h1>Seller Dashboard</h1>
-            <p>Manage your inventory, receive products, and sell to consumers</p>
-        </div>
-    </section>
-
-    <!-- Main Content -->
-    <section class="dashboard-section">
-        <div class="container">
-            <!-- Quick Stats -->
-            <div class="quick-stats">
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <i class="fas fa-cubes"></i>
-                        <h3>Products in Stock</h3>
+            
+            <div style="margin-top: auto; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--secondary-color); display: flex; align-items: center; justify-content: center; font-weight: bold; color: #0f172a;" id="user-avatar">S</div>
+                    <div>
+                        <div style="font-weight: 600; color: white;" id="user-name">Seller</div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary);" id="user-email"></div>
                     </div>
-                    <div class="stat-value" id="products-in-stock">-</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <i class="fas fa-shopping-cart"></i>
-                        <h3>Products Sold</h3>
-                    </div>
-                    <div class="stat-value" id="products-sold">-</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <i class="fas fa-truck"></i>
-                        <h3>Pending Receipts</h3>
-                    </div>
-                    <div class="stat-value" id="pending-receipts">-</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <h3>Alerts</h3>
-                    </div>
-                    <div class="stat-value" id="alerts">-</div>
-                </div>
+                <a href="index.html" class="nav-link" style="color: var(--danger-color);">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
             </div>
+        </aside>
 
-            <!-- Tabs -->
-            <div class="row mb-40">
-                <div class="col-12">
-                    <div class="tabs-container">
-                        <div class="tabs">
-                            <div class="tab active" data-tab="inventory">
-                                <i class="fas fa-cubes"></i> Inventory
-                            </div>
-                            <div class="tab" data-tab="receive-products">
-                                <i class="fas fa-truck"></i> Receive Products
-                            </div>
-                            <div class="tab" data-tab="sell-products">
-                                <i class="fas fa-shopping-cart"></i> Sell to Consumer
-                            </div>
-                        </div>
-                        
-                        <!-- Inventory Tab Content -->
-                        <div class="tab-content active" id="inventory-content">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title"><i class="fas fa-cubes"></i> Current Inventory</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="search-filters">
-                                        <div class="search-box">
-                                            <div class="input-with-icon">
-                                                <input type="text" class="form-control" id="inventory-search" placeholder="Search products...">
-                                                <i class="fas fa-search"></i>
-                                            </div>
-                                        </div>
-                                        <div class="filter-group">
-                                            <select class="form-control" id="filter-status">
-                                                <option value="all">All Status</option>
-                                                <option value="in-stock">In Stock</option>
-                                                <option value="reserved">Reserved</option>
-                                                <option value="sold">Sold</option>
-                                            </select>
-                                            <button id="refresh-inventory" class="btn btn-outline-primary btn-sm">
-                                                <i class="fas fa-sync-alt"></i> Refresh
-                                            </button>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="table-container">
-                                        <div id="inventory-loading" class="loading-indicator">
-                                            <div class="spinner"></div>
-                                            <p>Loading inventory from blockchain...</p>
-                                        </div>
-                                        <div id="no-inventory">
-                                            <i class="fas fa-cube"></i>
-                                            <p>No products in inventory yet. Products will appear here when transferred from manufacturers.</p>
-                                        </div>
-                                        <table class="data-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Product Name</th>
-                                                    <th>Serial Number</th>
-                                                    <th>Manufacturer</th>
-                                                    <th>Received Date</th>
-                                                    <th>Status</th>
-                                                    <th>Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="inventory-table">
-                                                <!-- Inventory items will be dynamically inserted here -->
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    
-                                    <div class="pagination">
-                                        <button class="btn btn-sm btn-outline-primary" id="prev-page" disabled>
-                                            <i class="fas fa-chevron-left"></i> Previous
-                                        </button>
-                                        <span>Page 1 of 1</span>
-                                        <button class="btn btn-sm btn-outline-primary" id="next-page" disabled>
-                                            Next <i class="fas fa-chevron-right"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Receive Products Tab Content -->
-                        <div class="tab-content" id="receive-products-content">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title"><i class="fas fa-truck"></i> Receive Products from Manufacturer</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <h3 class="card-title"><i class="fas fa-qrcode"></i> Scan QR Code</h3>
-                                                </div>
-                                                <div class="card-body">
-                                                    <p>Scan the QR code on the product or shipment package.</p>
-                                                    <div class="qr-scanner-box">
-                                                        <i class="fas fa-camera"></i>
-                                                    </div>
-                                                    <div id="qr-result" class="text-center text-muted mt-10">
-                                                        No QR code detected yet
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-6">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <h3 class="card-title"><i class="fas fa-keyboard"></i> Manual Entry</h3>
-                                                </div>
-                                                <div class="card-body">
-                                                    <p>Enter the product details manually.</p>
-                                                    <form id="receive-form">
-                                                        <div class="form-group">
-                                                            <label for="transfer-code">Transfer Code</label>
-                                                            <input type="text" class="form-control" id="transfer-code" placeholder="Enter transfer code from manufacturer">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="product-serial">Product Serial Number</label>
-                                                            <input type="text" class="form-control" id="product-serial" placeholder="Enter product serial number">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="manufacturer-id">Manufacturer ID</label>
-                                                            <input type="text" class="form-control" id="manufacturer-id" placeholder="Enter manufacturer ID">
-                                                        </div>
-                                                        <button type="button" class="btn btn-primary" id="verify-transfer-btn">
-                                                            <i class="fas fa-check-circle"></i> Verify & Receive
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="row mt-40">
-                                        <div class="col-12">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <h3 class="card-title"><i class="fas fa-clipboard-list"></i> Pending Transfers</h3>
-                                                </div>
-                                                <div class="card-body">
-                                                    <div class="table-container">
-                                                        <table class="data-table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Transfer ID</th>
-                                                                    <th>Manufacturer</th>
-                                                                    <th>Products Count</th>
-                                                                    <th>Date Initiated</th>
-                                                                    <th>Status</th>
-                                                                    <th>Actions</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody id="pending-transfers-table">
-                                                                <!-- Pending transfers will be loaded here dynamically -->
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Sell to Consumer Tab Content -->
-                        <div class="tab-content" id="sell-products-content">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title"><i class="fas fa-shopping-cart"></i> Sell Product to Consumer</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <form id="sell-form">
-                                                <div class="form-group">
-                                                    <label for="productSN">Product Serial Number</label>
-                                                    <div class="input-with-icon">
-                                                        <input type="text" class="form-control" id="productSN" placeholder="Enter product serial number">
-                                                        <i class="fas fa-barcode"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="consumerCode">Consumer Code</label>
-                                                    <div class="input-with-icon">
-                                                        <input type="text" class="form-control" id="consumerCode" placeholder="Enter consumer code">
-                                                        <i class="fas fa-user"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="salePrice">Sale Price</label>
-                                                    <div class="input-with-icon">
-                                                        <input type="number" class="form-control" id="salePrice" placeholder="Enter sale price" min="0" step="0.01">
-                                                        <i class="fas fa-dollar-sign"></i>
-                                                    </div>
-                                                </div>
-                                                <button type="submit" class="btn btn-primary" id="sell-to-consumer-btn">
-                                                    <i class="fas fa-check-circle"></i> Complete Sale
-                                                </button>
-                                            </form>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <h3 class="card-title"><i class="fas fa-info-circle"></i> Sale Information</h3>
-                                                </div>
-                                                <div class="card-body">
-                                                    <div id="product-details" style="display: none;">
-                                                        <h4>Product Details</h4>
-                                                        <div class="detail-row">
-                                                            <div>Product Name:</div>
-                                                            <div id="pd-name">-</div>
-                                                        </div>
-                                                        <div class="detail-row">
-                                                            <div>Serial Number:</div>
-                                                            <div id="pd-serial">-</div>
-                                                        </div>
-                                                        <div class="detail-row">
-                                                            <div>Manufacturer:</div>
-                                                            <div id="pd-manufacturer">-</div>
-                                                        </div>
-                                                        <div class="detail-row">
-                                                            <div>Base Price:</div>
-                                                            <div id="pd-price">-</div>
-                                                        </div>
-                                                    </div>
-                                                    <div id="no-product-selected" class="text-center">
-                                                        <div class="empty-state-icon">
-                                                            <i class="fas fa-box-open"></i>
-                                                        </div>
-                                                        <p>Enter a product serial number to see details</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="row mt-40">
-                                        <div class="col-12">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <h3 class="card-title"><i class="fas fa-history"></i> Recent Sales</h3>
-                                                </div>
-                                                <div class="card-body">
-                                                    <div class="table-container">
-                                                        <table class="data-table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Date</th>
-                                                                    <th>Product</th>
-                                                                    <th>Serial Number</th>
-                                                                    <th>Consumer</th>
-                                                                    <th>Price</th>
-                                                                    <th>Transaction</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody id="recent-sales-table">
-                                                                <!-- Recent sales will be loaded here dynamically -->
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Main Content -->
+        <main class="main-content">
+            <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; position: static; padding: 0; background: transparent; border: none;">
+                <div>
+                    <h1>Seller Dashboard</h1>
+                    <p>Manage your inventory and sales.</p>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sale Success Modal -->
-    <div class="modal" id="saleSuccessModal">
-        <div class="modal-backdrop"></div>
-        <div class="modal-container">
-            <div class="modal-header">
-                <h3><i class="fas fa-check-circle"></i> Sale Completed Successfully</h3>
-                <button type="button" class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="text-center mb-24">
-                    <div class="success-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <h4>Product Successfully Sold to Consumer</h4>
-                    <p class="mt-16">The product has been transferred to the consumer with the following details:</p>
-                </div>
-                
-                <div class="product-details">
-                    <div class="detail-row">
-                        <div>Product Name:</div>
-                        <div id="sale-product-name">-</div>
-                    </div>
-                    <div class="detail-row">
-                        <div>Serial Number:</div>
-                        <div id="sale-serial-number">-</div>
-                    </div>
-                    <div class="detail-row">
-                        <div>Price:</div>
-                        <div id="sale-price">-</div>
-                    </div>
-                    <div class="detail-row">
-                        <div>Consumer Code:</div>
-                        <div id="sale-consumer-code">-</div>
-                    </div>
-                    <div class="detail-row">
-                        <div>Transaction Hash:</div>
-                        <div id="sale-tx-hash">-</div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary" id="print-receipt">
-                    <i class="fas fa-print"></i> Print Receipt
+                <button class="btn btn-primary btn-receive-product" id="header-receive-btn">
+                    <i class="fas fa-download"></i> Receive Product
                 </button>
-                <button type="button" class="btn btn-primary close-modal">Done</button>
+            </header>
+
+            <!-- Dashboard View -->
+            <div id="view-dashboard" class="view-section">
+                <!-- Stats Grid -->
+                <div class="row" style="margin-bottom: 2rem;">
+                    <div class="col-4 fade-in-up">
+                        <div class="card">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                                <div>
+                                    <h3 style="font-size: 2.5rem; margin-bottom: 0;" id="products-in-stock">0</h3>
+                                    <p style="margin: 0;">Products in Stock</p>
+                                </div>
+                                <div style="padding: 1rem; background: rgba(var(--secondary-hue), 80%, 60%, 0.1); border-radius: var(--radius-md); color: var(--secondary-color);">
+                                    <i class="fas fa-boxes fa-lg"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 fade-in-up delay-100">
+                        <div class="card">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                                <div>
+                                    <h3 style="font-size: 2.5rem; margin-bottom: 0;" id="products-sold">0</h3>
+                                    <p style="margin: 0;">Total Sales</p>
+                                </div>
+                                <div style="padding: 1rem; background: rgba(var(--success-color), 0.1); border-radius: var(--radius-md); color: var(--success-color);">
+                                    <i class="fas fa-chart-line fa-lg"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 fade-in-up delay-200">
+                        <div class="card">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                                <div>
+                                    <h3 style="font-size: 2.5rem; margin-bottom: 0;" id="pending-receipts">0</h3>
+                                    <p style="margin: 0;">Pending Orders</p>
+                                </div>
+                                <div style="padding: 1rem; background: rgba(var(--warning-color), 0.1); border-radius: var(--radius-md); color: var(--warning-color);">
+                                    <i class="fas fa-clock fa-lg"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Sales Table -->
+                <div class="card fade-in-up delay-300">
+                    <h3 style="margin-bottom: 1.5rem;">Recent Sales</h3>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; color: var(--text-secondary);">
+                            <thead>
+                                <tr style="border-bottom: 1px solid var(--border-color); text-align: left;">
+                                    <th style="padding: 1rem;">Date</th>
+                                    <th style="padding: 1rem;">Product Name</th>
+                                    <th style="padding: 1rem;">Serial Number</th>
+                                    <th style="padding: 1rem;">Consumer Code</th>
+                                    <th style="padding: 1rem;">Price</th>
+                                    <th style="padding: 1rem;">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recent-sales-table">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
+
+            <!-- Sell Product View -->
+            <div id="view-sell-product" class="view-section" style="display: none;">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card">
+                            <h3 style="margin-bottom: 1.5rem;">Sell Product to Consumer</h3>
+                            <div id="no-product-selected" style="padding: 2rem; text-align: center; border: 2px dashed var(--border-light); border-radius: var(--radius-md); margin-bottom: 1rem;">
+                                <i class="fas fa-shopping-basket" style="font-size: 3rem; color: var(--text-secondary); margin-bottom: 1rem;"></i>
+                                <p>Select a product from your inventory to sell.</p>
+                                <button class="btn btn-outline-primary" onclick="$('#nav-inventory').click()">Go to Inventory</button>
+                            </div>
+                            
+                            <div id="product-details" style="display: none;">
+                                <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1.5rem;">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                        <span style="color: var(--text-secondary);">Product:</span>
+                                        <strong id="pd-name">Nike Air Max</strong>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <span style="color: var(--text-secondary);">Serial Number:</span>
+                                        <code id="pd-serial">SN12345678</code>
+                                    </div>
+                                </div>
+
+                                <form id="sell-form">
+                                    <input type="hidden" id="productSN">
+                                    <div class="form-group">
+                                        <label for="consumerCode">Consumer Code</label>
+                                        <input type="text" id="consumerCode" class="form-control" placeholder="Enter consumer's wallet address or ID" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="salePrice">Sale Price (₹)</label>
+                                        <input type="number" id="salePrice" class="form-control" placeholder="0.00" min="0" step="0.01" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" id="sell-to-consumer-btn" style="width: 100%;">
+                                        <i class="fas fa-check-circle"></i> Complete Sale
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card">
+                            <h3 style="margin-bottom: 1.5rem;">Pending Transfers</h3>
+                            <p style="color: var(--text-secondary); margin-bottom: 1rem;">Products sent by manufacturers waiting for your acceptance.</p>
+                            <div style="overflow-x: auto;">
+                                <table style="width: 100%; border-collapse: collapse; color: var(--text-secondary);">
+                                    <thead>
+                                        <tr style="border-bottom: 1px solid var(--border-color); text-align: left;">
+                                            <th style="padding: 0.5rem;">Product</th>
+                                            <th style="padding: 0.5rem;">Serial</th>
+                                            <th style="padding: 0.5rem;">Category</th>
+                                            <th style="padding: 0.5rem;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="pending-transfers-table">
+                                        <!-- Populated by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inventory View -->
+            <div id="view-inventory" class="view-section" style="display: none;">
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h3>My Inventory</h3>
+                        <button class="btn btn-sm btn-outline-primary" id="refresh-inventory">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                    
+                    <div id="inventory-loading" style="text-align: center; padding: 2rem; display: none;">
+                        <div class="loading-spinner-sm"></div> Loading inventory...
+                    </div>
+
+                    <div id="no-inventory" style="text-align: center; padding: 3rem; display: none;">
+                        <i class="fas fa-box-open" style="font-size: 3rem; color: var(--text-secondary); margin-bottom: 1rem;"></i>
+                        <p>No products in inventory.</p>
+                    </div>
+
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; color: var(--text-secondary);">
+                            <thead>
+                                <tr style="border-bottom: 1px solid var(--border-color); text-align: left;">
+                                    <th style="padding: 1rem;">Name</th>
+                                    <th style="padding: 1rem;">Serial Number</th>
+                                    <th style="padding: 1rem;">Manufacturer</th>
+                                    <th style="padding: 1rem;">Category</th>
+                                    <th style="padding: 1rem;">Date Received</th>
+                                    <th style="padding: 1rem;">Status</th>
+                                    <th style="padding: 1rem;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventory-table">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History View -->
+            <div id="view-history" class="view-section" style="display: none;">
+                <div class="card">
+                    <h3 style="margin-bottom: 1.5rem;">Activity History</h3>
+                    <div id="history-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success Modal -->
+            <div id="saleSuccessModal" class="modal">
+                <div class="modal-content" style="text-align: center; max-width: 750px;">
+                    <div style="width: 60px; height: 60px; background: rgba(var(--success-color), 0.1); color: var(--success-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 1.5rem;">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <h3 style="margin-bottom: 1rem;">Sale Successful!</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 2rem;">The product ownership has been transferred to the consumer.</p>
+                    
+                    <div style="display: flex; gap: 2rem; margin-bottom: 2rem; text-align: left; align-items: stretch;">
+                        <!-- Details Column -->
+                        <div style="flex: 1; background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: var(--radius-md);">
+                            <div style="margin-bottom: 0.8rem;"><strong>Product:</strong> <span id="sale-product-name">Nike Air Max</span></div>
+                            <div style="margin-bottom: 0.8rem;"><strong>Serial:</strong> <span id="sale-serial-number">SN12345678</span></div>
+                            <div style="margin-bottom: 0.8rem;"><strong>Price:</strong> <span id="sale-price">₹120.00</span></div>
+                            <div style="margin-bottom: 0.8rem;"><strong>Consumer:</strong> <span id="sale-consumer-code">0x123...</span></div>
+                            <div style="margin-bottom: 0.8rem;"><strong>Date:</strong> <span id="sale-date">2023-10-27 10:30 AM</span></div>
+                            <div><strong>Transaction:</strong> <span id="sale-tx-hash" style="font-family: monospace; font-size: 0.8rem; color: var(--primary-color); word-break: break-all;">0xabc...</span></div>
+                        </div>
+
+                        <!-- QR Code Column -->
+                        <div style="flex: 0 0 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255,255,255,0.02); border-radius: var(--radius-md); padding: 1rem;">
+                            <div id="qrcode" style="background: white; padding: 10px; border-radius: 5px; margin-bottom: 0.5rem;"></div>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0;">Scan to Verify</p>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: center; gap: 1rem;">
+                        <button class="btn btn-primary" onclick="$('#saleSuccessModal').hide()">Close</button>
+                        <button class="btn btn-outline-primary" id="download-qr-btn">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 
-    <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.3.5/dist/web3.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@truffle/contract@4.3.19/dist/truffle-contract.min.js"></script>
-    <script src="js/login.js"></script>
-    <script src="js/seller.js"></script>
-    <script src="js/app.js"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="assets/js/api-client.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/seller.js"></script>
     <script>
-        $(document).ready(function() {
-            // Initialize the blockchain app with seller type
-            BlockchainApp.init('seller');
-            
-            // Initialize seller app
-            SellerApp.initializeStats();
-            
-            // Display user information
-            const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-            if (currentUser) {
-                $('#welcome-message').text('Welcome, ' + currentUser.name + '!');
-            } else {
-                window.location.href = 'login.html';
-            }
-            
-            // Event handlers
-            $('#logout-btn').click(function() {
-                logoutUser();
-            });
-            
-            // Tab navigation
-            $('.tab').click(function() {
-                const tabId = $(this).data('tab');
-                
-                // Update active tab
-                $('.tab').removeClass('active');
-                $(this).addClass('active');
-                
-                // Show corresponding content
-                $('.tab-content').hide();
-                $('#' + tabId + '-content').show();
-            });
-            
-            // Close modal buttons
-            $('.close-modal').on('click', function() {
-                $('.modal').hide();
-            });
-            
-            // Close modal if clicking outside of it
-            $(window).on('click', function(event) {
-                if ($(event.target).is('.modal')) {
-                    $('.modal').hide();
-                }
-            });
-        });
+        // App initialized in seller.js
     </script>
 </body>
 </html>

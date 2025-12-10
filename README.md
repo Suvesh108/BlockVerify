@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Anti-Counterfeit Product Identification System Using Blockchain (BlockVerify)
 
 This project implements a blockchain-based system for tracking and verifying the authenticity of products throughout the supply chain, from manufacturer to retailer to consumer.
@@ -56,24 +56,37 @@ The Anti-Counterfeit Product Identification System provides a secure and transpa
 
 ```
 project/
-├── src/
-│   ├── css/
-│   │   ├── custom.css          # Custom styling for the application
-│   │   └── style.css           # Main styles
-│   ├── js/
-│   │   ├── app.js              # Unified blockchain application logic
-│   │   ├── login.js            # Authentication functionality
-│   │   ├── web3.min.js         # Web3 library for blockchain interaction
-│   │   └── truffle-contract.js # Truffle contract interface
+├── contracts/                  # Smart contracts
+│   ├── Migrations.sol
+│   └── product.sol             # Main product contract
+├── migrations/                 # Migration scripts
+│   ├── 1_initial_migration.js
+│   └── 2_deploy_contract.js
+├── src/                        # Frontend application
+│   ├── assets/
+│   │   ├── css/
+│   │   │   ├── style.css       # Main stylesheets
+│   │   │   └── variables.css   # CSS variables
+│   │   └── js/
+│   │       ├── admin.js        # Admin functionality
+│   │       ├── api-client.js   # API interaction layer
+│   │       ├── app.js          # Main application logic
+│   │       ├── auth.js         # Authentication handling
+│   │       ├── consumer.js     # Consumer dashboard logic
+│   │       ├── manufacturer.js # Manufacturer dashboard logic
+│   │       ├── seller.js       # Seller dashboard logic
+│   │       ├── verifyProduct.js# Verification logic
+│   │       └── ...             # External libraries
+│   ├── admin.html              # Admin dashboard
+│   ├── consumer.html           # Consumer portal
 │   ├── index.html              # Landing page
-│   ├── login.html              # Authentication page
+│   ├── login.html              # Login page
 │   ├── manufacturer.html       # Manufacturer dashboard
 │   ├── seller.html             # Seller dashboard
-│   ├── consumer.html           # Consumer portal
 │   └── verifyProducts.html     # Product verification page
-├── contracts/                  # Smart contracts
-├── migrations/                 # Truffle migration scripts
-└── truffle-config.js           # Truffle configuration
+├── server.js                   # Server entry point
+├── truffle-config.js           # Truffle configuration
+└── package.json                # Dependencies and scripts
 ```
 
 ## Setup Instructions
@@ -112,8 +125,17 @@ project/
 
 6. Open the application in a web browser:
    ```bash
-   # Using any local server, e.g., http-server
-   npx http-server src
+   # Start the application (runs both backend and frontend)
+   npm start
+   ```
+
+   Alternatively, you can run them separately:
+   ```bash
+   # Terminal 1: Start Backend
+   npm run server
+
+   # Terminal 2: Start Frontend
+   npm run dev
    ```
 
 7. Configure MetaMask to connect to your local Ganache blockchain
@@ -159,15 +181,8 @@ The MIT License is a permissive free software license originating at the Massach
 
 For more information about the MIT License, visit: [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT)
 
-## Contributors
-
-- [Suvesh](https://github.com/Suvesh108)
-
 ## Acknowledgments
 
 - Ethereum community for blockchain tools and libraries
 - Bootstrap team for responsive design framework 
-=======
-# testing
->>>>>>> origin/main
 

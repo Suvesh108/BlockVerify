@@ -38,7 +38,6 @@ The Anti-Counterfeit Product Identification System provides a secure and transpa
 
 ### Front-End
 - HTML5, CSS3, JavaScript
-- Bootstrap for responsive design
 - jQuery for DOM manipulation
 - QR code integration for product scanning
 

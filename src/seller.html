@@ -1,292 +1,309 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seller Dashboard - BlockVerify</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <!-- Modern 2026 Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: "class", theme: { extend: { colors: { background: "#F9FAFB", surface: "#FFFFFF", "surface-container-low": "#F3F4F5", "surface-container": "#EDEEEF", "on-surface": "#18181B", "on-surface-variant": "#71717A", "outline-variant": "rgba(226,232,240,0.5)", primary: "#006C49", "primary-container": "#10B981", "on-primary-container": "#00422B", "secondary-color": "#3b82f6" }, fontFamily: { headline: ["Plus Jakarta Sans", "sans-serif"], body: ["Manrope", "sans-serif"], mono: ["JetBrains Mono", "monospace"] } } } }
+    </script>
+
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+        .glass-panel { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(24px); border: 1px solid var(--tw-colors-outline-variant); }
+        .diffused-shadow { box-shadow: 0 24px 48px -12px rgba(24, 24, 27, 0.06); }
+        .spring-hover { transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease; }
+        .spring-hover:hover { transform: scale(1.02); box-shadow: 0 24px 48px -10px rgba(16, 185, 129, 0.1); }
+        .nav-link.active { background: var(--tw-colors-blue-500); color: #FFFFFF; border-color: transparent; }
+        .nav-link { transition: all 0.3s ease; }
+        
+        .modal { display: none; position: fixed; inset: 0; z-index: 100; background: rgba(24,24,27,0.4); backdrop-filter: blur(8px); }
+        .modal-content { background: #FFFFFF; border-radius: 2rem; max-width: 600px; margin: 5dvh auto; padding: 2.5rem; border: 1px solid var(--tw-colors-outline-variant); box-shadow: 0 40px 80px -20px rgba(0,0,0,0.2); position: relative; }
+        .close { position: absolute; top: 1.5rem; right: 1.5rem; cursor: pointer; color: var(--tw-colors-on-surface-variant); }
+        
+        .input-glass { background: rgba(243,244,245,0.7); border: 1px solid var(--tw-colors-outline-variant); border-radius: 1rem; width: 100%; padding: 0.875rem 1rem; color: var(--tw-colors-on-surface); font-family: inherit; transition: all 0.3s; }
+        .input-glass:focus { outline: none; border-color: var(--tw-colors-blue-500); background: #FFFFFF; box-shadow: 0 0 0 4px rgba(59,130,246,0.1); }
+        
+        th { font-family: "Plus Jakarta Sans", sans-serif; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--tw-colors-on-surface-variant); padding: 1rem; font-weight: 700; border-bottom: 1px solid var(--tw-colors-outline-variant); }
+        td { padding: 1rem; border-bottom: 1px solid var(--tw-colors-outline-variant); font-size: 0.875rem; color: var(--tw-colors-on-surface); }
+        tr:last-child td { border-bottom: none; }
+    </style>
 </head>
-<body>
-    <div style="display: flex; min-height: 100vh;">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div style="margin-bottom: 3rem;">
-                <a href="index.html" class="navbar-brand">
-                    <i class="fas fa-cube"></i> BlockVerify
-                </a>
-            </div>
+<body class="bg-background font-body text-on-surface flex min-h-[100dvh] overflow-hidden">
+
+    <!-- Ambient Decor -->
+    <div class="absolute top-0 right-0 w-[50vw] h-[50vw] bg-blue-500/5 blur-[120px] rounded-full pointer-events-none z-0"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar w-72 glass-panel border-r border-outline-variant flex flex-col justify-between p-6 relative z-10">
+        <div>
+            <!-- Brand -->
+            <a href="index.html" class="flex items-center gap-2 mb-12 group">
+                <div class="w-10 h-10 rounded-xl bg-on-surface flex items-center justify-center group-hover:bg-blue-500 transition-colors duration-300">
+                    <span class="material-symbols-outlined text-white text-[18px]">deployed_code</span>
+                </div>
+                <span class="font-headline font-black tracking-tighter text-xl">BlockVerify</span>
+            </a>
             
-            <nav>
-                <a href="#" class="nav-link active" id="nav-dashboard">
-                    <i class="fas fa-tachometer-alt"></i> Dashboard
+            <!-- Navigation -->
+            <nav class="space-y-2">
+                <a href="#" class="nav-link active flex items-center gap-3 px-4 py-3 rounded-xl font-headline font-bold text-sm text-on-surface border border-transparent hover:bg-surface-container-low hover:border-outline-variant" id="nav-dashboard">
+                    <span class="material-symbols-outlined text-[20px]">dashboard</span> Command Hub
                 </a>
-                <a href="#" class="nav-link" id="nav-sell-product">
-                    <i class="fas fa-shopping-cart"></i> Sell Product
+                <a href="#" class="nav-link flex items-center gap-3 px-4 py-3 rounded-xl font-headline font-bold text-sm text-on-surface border border-transparent hover:bg-surface-container-low hover:border-outline-variant" id="nav-sell-product">
+                    <span class="material-symbols-outlined text-[20px]">storefront</span> Execute Sale
                 </a>
-                <a href="#" class="nav-link" id="nav-inventory">
-                    <i class="fas fa-box-open"></i> Inventory
+                <a href="#" class="nav-link flex items-center gap-3 px-4 py-3 rounded-xl font-headline font-bold text-sm text-on-surface border border-transparent hover:bg-surface-container-low hover:border-outline-variant" id="nav-inventory">
+                    <span class="material-symbols-outlined text-[20px]">inventory_2</span> Vault Assets
                 </a>
-                <a href="#" class="nav-link" id="nav-history">
-                    <i class="fas fa-history"></i> History
+                <a href="#" class="nav-link flex items-center gap-3 px-4 py-3 rounded-xl font-headline font-bold text-sm text-on-surface border border-transparent hover:bg-surface-container-low hover:border-outline-variant" id="nav-history">
+                    <span class="material-symbols-outlined text-[20px]">history</span> Activity Ledger
                 </a>
             </nav>
-            
-            <div style="margin-top: auto; padding-top: 2rem; border-top: 1px solid var(--border-color);">
-                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--secondary-color); display: flex; align-items: center; justify-content: center; font-weight: bold; color: #0f172a;" id="user-avatar">S</div>
+        </div>
+        
+        <!-- Profile & Logout -->
+        <div class="pt-6 border-t border-outline-variant/60">
+            <div class="flex items-center gap-3 mb-6 bg-surface-container-low p-3 rounded-xl border border-outline-variant">
+                <div class="w-10 h-10 rounded-lg bg-blue-500 text-white flex items-center justify-center font-bold font-headline" id="user-avatar">S</div>
+                <div class="overflow-hidden">
+                    <div class="font-bold font-headline text-sm truncate" id="user-name">Seller Node</div>
+                    <div class="text-xs text-on-surface-variant font-mono truncate" id="user-email">auth@store.local</div>
+                </div>
+            </div>
+            <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl font-headline font-bold text-sm text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors">
+                <span class="material-symbols-outlined text-[20px]">logout</span> Terminate Session
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content flex-1 h-[100dvh] overflow-y-auto relative z-10 px-10 py-10 scroll-smooth">
+        
+        <header class="flex justify-between items-end mb-12">
+            <div>
+                <span class="text-[10px] font-headline font-bold tracking-[0.2em] uppercase text-blue-500 mb-1 block">Transfer Node</span>
+                <h1 class="text-4xl font-headline font-black tracking-tighter">Seller Interface</h1>
+            </div>
+            <button class="btn-receive-product bg-border-outline-variant border border-outline-variant hover:bg-surface-container-low text-on-surface px-6 py-3 rounded-xl font-bold font-headline text-sm flex items-center gap-2 transition-colors" id="header-receive-btn">
+                <span class="material-symbols-outlined text-[18px]">download</span> Incoming Shipments
+            </button>
+        </header>
+
+        <!-- DASHBOARD VIEW -->
+        <div id="view-dashboard" class="view-section">
+            <div class="grid lg:grid-cols-3 gap-6 mb-10">
+                <div class="bg-surface glass-panel p-6 rounded-[2rem] diffused-shadow border border-outline-variant flex items-start justify-between">
                     <div>
-                        <div style="font-weight: 600; color: white;" id="user-name">Seller</div>
-                        <div style="font-size: 0.8rem; color: var(--text-secondary);" id="user-email"></div>
+                        <h3 id="products-in-stock" class="text-5xl font-headline font-black mb-1">0</h3>
+                        <p class="text-on-surface-variant text-sm font-medium">Vault Assets</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-blue-500 text-2xl">category</span>
                     </div>
                 </div>
-                <a href="index.html" class="nav-link" style="color: var(--danger-color);">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </a>
+                <div class="bg-surface glass-panel p-6 rounded-[2rem] diffused-shadow border border-outline-variant flex items-start justify-between">
+                    <div>
+                        <h3 id="products-sold" class="text-5xl font-headline font-black mb-1">0</h3>
+                        <p class="text-on-surface-variant text-sm font-medium">Executed Sales</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-primary-container/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary-container text-2xl">monitoring</span>
+                    </div>
+                </div>
+                <div class="bg-surface glass-panel p-6 rounded-[2rem] diffused-shadow border border-outline-variant flex items-start justify-between">
+                    <div>
+                        <h3 id="pending-receipts" class="text-5xl font-headline font-black mb-1">0</h3>
+                        <p class="text-on-surface-variant text-sm font-medium">Awaiting Custody</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-amber-500 text-2xl">hourglass_empty</span>
+                    </div>
+                </div>
             </div>
-        </aside>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; position: static; padding: 0; background: transparent; border: none;">
-                <div>
-                    <h1>Seller Dashboard</h1>
-                    <p>Manage your inventory and sales.</p>
+            <div class="bg-surface glass-panel rounded-[2rem] diffused-shadow border border-outline-variant overflow-hidden">
+                <div class="px-8 py-6 border-b border-outline-variant">
+                    <h3 class="font-headline font-bold text-xl">Recent Sales Trace</h3>
                 </div>
-                <button class="btn btn-primary btn-receive-product" id="header-receive-btn">
-                    <i class="fas fa-download"></i> Receive Product
-                </button>
-            </header>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-surface-container-low/50">
+                            <tr>
+                                <th>Ledger Timestamp</th><th>Asset Designation</th><th>Hash Serial</th><th>Consumer Token</th><th>Value</th><th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-sales-table">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-            <!-- Dashboard View -->
-            <div id="view-dashboard" class="view-section">
-                <!-- Stats Grid -->
-                <div class="row" style="margin-bottom: 2rem;">
-                    <div class="col-4 fade-in-up">
-                        <div class="card">
-                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
-                                <div>
-                                    <h3 style="font-size: 2.5rem; margin-bottom: 0;" id="products-in-stock">0</h3>
-                                    <p style="margin: 0;">Products in Stock</p>
-                                </div>
-                                <div style="padding: 1rem; background: rgba(var(--secondary-hue), 80%, 60%, 0.1); border-radius: var(--radius-md); color: var(--secondary-color);">
-                                    <i class="fas fa-boxes fa-lg"></i>
-                                </div>
-                            </div>
-                        </div>
+        <!-- SELL PRODUCT VIEW -->
+        <div id="view-sell-product" class="view-section" style="display: none;">
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Sell Console -->
+                <div class="bg-surface glass-panel p-8 rounded-[2.5rem] diffused-shadow border border-outline-variant h-fit">
+                    <h3 class="font-headline font-black text-2xl mb-6">Consumer Transfer Console</h3>
+                    
+                    <div id="no-product-selected" class="text-center py-12 border-2 border-dashed border-outline-variant rounded-[1.5rem] bg-surface-container-low/30">
+                        <span class="material-symbols-outlined text-4xl text-on-surface-variant/50 mb-3 block">qr_code_scanner</span>
+                        <p class="text-sm font-medium text-on-surface-variant mb-4">No asset selected for terminal transfer.</p>
+                        <button class="bg-surface border border-outline-variant text-on-surface px-4 py-2 rounded-xl text-sm font-bold spring-hover" onclick="$('#nav-inventory').click()">Access Vault</button>
                     </div>
-                    <div class="col-4 fade-in-up delay-100">
-                        <div class="card">
-                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
-                                <div>
-                                    <h3 style="font-size: 2.5rem; margin-bottom: 0;" id="products-sold">0</h3>
-                                    <p style="margin: 0;">Total Sales</p>
-                                </div>
-                                <div style="padding: 1rem; background: rgba(var(--success-color), 0.1); border-radius: var(--radius-md); color: var(--success-color);">
-                                    <i class="fas fa-chart-line fa-lg"></i>
-                                </div>
+                    
+                    <div id="product-details" style="display: none;" class="space-y-6">
+                        <div class="bg-blue-500/5 border border-blue-500/20 p-4 rounded-2xl flex justify-between items-center">
+                            <div>
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-blue-600 block mb-1">Active Asset</span>
+                                <strong id="pd-name" class="font-headline text-lg">Product Name</strong>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant block mb-1">Hash ID</span>
+                                <code id="pd-serial" class="text-xs bg-surface px-2 py-1 rounded border border-outline-variant font-mono">SN12345</code>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-4 fade-in-up delay-200">
-                        <div class="card">
-                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
-                                <div>
-                                    <h3 style="font-size: 2.5rem; margin-bottom: 0;" id="pending-receipts">0</h3>
-                                    <p style="margin: 0;">Pending Orders</p>
-                                </div>
-                                <div style="padding: 1rem; background: rgba(var(--warning-color), 0.1); border-radius: var(--radius-md); color: var(--warning-color);">
-                                    <i class="fas fa-clock fa-lg"></i>
-                                </div>
+
+                        <form id="sell-form" class="space-y-4">
+                            <input type="hidden" id="productSN">
+                            <div class="space-y-1">
+                                <label class="text-[11px] font-headline font-bold uppercase tracking-widest text-on-surface-variant">Consumer Wallet / ID Token</label>
+                                <input type="text" id="consumerCode" class="input-glass font-mono" placeholder="Input Entity Cipher" required>
                             </div>
-                        </div>
+                            <div class="space-y-1">
+                                <label class="text-[11px] font-headline font-bold uppercase tracking-widest text-on-surface-variant">Exchange Value (₹)</label>
+                                <input type="number" id="salePrice" class="input-glass font-mono" placeholder="0.00" min="0" step="0.01" required>
+                            </div>
+                            <button type="submit" class="w-full bg-blue-500 text-white py-4 rounded-xl font-bold font-headline text-base spring-hover mt-2 flex items-center justify-center gap-2" id="sell-to-consumer-btn">
+                                <span class="material-symbols-outlined">sync_alt</span> Finalize Consumer Transfer
+                            </button>
+                        </form>
                     </div>
                 </div>
 
-                <!-- Recent Sales Table -->
-                <div class="card fade-in-up delay-300">
-                    <h3 style="margin-bottom: 1.5rem;">Recent Sales</h3>
-                    <div style="overflow-x: auto;">
-                        <table style="width: 100%; border-collapse: collapse; color: var(--text-secondary);">
-                            <thead>
-                                <tr style="border-bottom: 1px solid var(--border-color); text-align: left;">
-                                    <th style="padding: 1rem;">Date</th>
-                                    <th style="padding: 1rem;">Product Name</th>
-                                    <th style="padding: 1rem;">Serial Number</th>
-                                    <th style="padding: 1rem;">Consumer Code</th>
-                                    <th style="padding: 1rem;">Price</th>
-                                    <th style="padding: 1rem;">Status</th>
+                <!-- Pending Shipments -->
+                <div class="bg-surface-container-low p-8 rounded-[2.5rem] diffused-shadow border border-outline-variant h-fit">
+                    <div class="mb-6">
+                        <h3 class="font-headline font-black text-2xl">Inbound Shipments</h3>
+                        <p class="text-sm text-on-surface-variant">Assets minted by genesis nodes awaiting your cryptographic custody acceptance.</p>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left bg-surface rounded-2xl overflow-hidden shadow-sm border border-outline-variant">
+                            <thead class="bg-surface-container/50">
+                                <tr>
+                                    <th>Asset Name</th><th>Hash Serial</th><th>Class</th><th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody id="recent-sales-table">
+                            <tbody id="pending-transfers-table">
                                 <!-- Populated by JS -->
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Sell Product View -->
-            <div id="view-sell-product" class="view-section" style="display: none;">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="card">
-                            <h3 style="margin-bottom: 1.5rem;">Sell Product to Consumer</h3>
-                            <div id="no-product-selected" style="padding: 2rem; text-align: center; border: 2px dashed var(--border-light); border-radius: var(--radius-md); margin-bottom: 1rem;">
-                                <i class="fas fa-shopping-basket" style="font-size: 3rem; color: var(--text-secondary); margin-bottom: 1rem;"></i>
-                                <p>Select a product from your inventory to sell.</p>
-                                <button class="btn btn-outline-primary" onclick="$('#nav-inventory').click()">Go to Inventory</button>
-                            </div>
-                            
-                            <div id="product-details" style="display: none;">
-                                <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1.5rem;">
-                                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                        <span style="color: var(--text-secondary);">Product:</span>
-                                        <strong id="pd-name">Nike Air Max</strong>
-                                    </div>
-                                    <div style="display: flex; justify-content: space-between;">
-                                        <span style="color: var(--text-secondary);">Serial Number:</span>
-                                        <code id="pd-serial">SN12345678</code>
-                                    </div>
-                                </div>
+        <!-- INVENTORY VIEW -->
+        <div id="view-inventory" class="view-section" style="display: none;">
+            <div class="bg-surface glass-panel rounded-[2.5rem] diffused-shadow border border-outline-variant overflow-hidden">
+                <div class="px-8 py-6 border-b border-outline-variant flex justify-between items-center">
+                    <h3 class="font-headline font-black text-2xl">Secure Vault</h3>
+                    <button id="refresh-inventory" class="text-xs font-bold uppercase tracking-widest text-blue-600 flex items-center gap-1 hover:text-blue-700 transition-colors">
+                        <span class="material-symbols-outlined text-[16px]">refresh</span> Refresh State
+                    </button>
+                </div>
+                
+                <div id="inventory-loading" class="text-center py-16 hidden">
+                    <span class="material-symbols-outlined text-4xl text-blue-500 animate-spin">sync</span>
+                    <p class="font-headline font-bold uppercase tracking-widest text-xs mt-4">Syncing node state...</p>
+                </div>
 
-                                <form id="sell-form">
-                                    <input type="hidden" id="productSN">
-                                    <div class="form-group">
-                                        <label for="consumerCode">Consumer Code</label>
-                                        <input type="text" id="consumerCode" class="form-control" placeholder="Enter consumer's wallet address or ID" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="salePrice">Sale Price (₹)</label>
-                                        <input type="number" id="salePrice" class="form-control" placeholder="0.00" min="0" step="0.01" required>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary" id="sell-to-consumer-btn" style="width: 100%;">
-                                        <i class="fas fa-check-circle"></i> Complete Sale
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="card">
-                            <h3 style="margin-bottom: 1.5rem;">Pending Transfers</h3>
-                            <p style="color: var(--text-secondary); margin-bottom: 1rem;">Products sent by manufacturers waiting for your acceptance.</p>
-                            <div style="overflow-x: auto;">
-                                <table style="width: 100%; border-collapse: collapse; color: var(--text-secondary);">
-                                    <thead>
-                                        <tr style="border-bottom: 1px solid var(--border-color); text-align: left;">
-                                            <th style="padding: 0.5rem;">Product</th>
-                                            <th style="padding: 0.5rem;">Serial</th>
-                                            <th style="padding: 0.5rem;">Category</th>
-                                            <th style="padding: 0.5rem;">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="pending-transfers-table">
-                                        <!-- Populated by JS -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                <div id="no-inventory" class="text-center py-20 hidden">
+                    <span class="material-symbols-outlined text-5xl text-on-surface-variant/40 mb-3 block">inventory_2</span>
+                    <p class="text-on-surface-variant font-medium">Your cryptographic vault is currently empty.</p>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-surface-container-low/50">
+                            <tr>
+                                <th>Designation</th><th>Hash ID</th><th>Genesis Node</th><th>Class</th><th>Transfer Date</th><th>State</th><th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventory-table">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
+        </div>
 
-            <!-- Inventory View -->
-            <div id="view-inventory" class="view-section" style="display: none;">
-                <div class="card">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                        <h3>My Inventory</h3>
-                        <button class="btn btn-sm btn-outline-primary" id="refresh-inventory">
-                            <i class="fas fa-sync-alt"></i> Refresh
-                        </button>
-                    </div>
-                    
-                    <div id="inventory-loading" style="text-align: center; padding: 2rem; display: none;">
-                        <div class="loading-spinner-sm"></div> Loading inventory...
-                    </div>
-
-                    <div id="no-inventory" style="text-align: center; padding: 3rem; display: none;">
-                        <i class="fas fa-box-open" style="font-size: 3rem; color: var(--text-secondary); margin-bottom: 1rem;"></i>
-                        <p>No products in inventory.</p>
-                    </div>
-
-                    <div style="overflow-x: auto;">
-                        <table style="width: 100%; border-collapse: collapse; color: var(--text-secondary);">
-                            <thead>
-                                <tr style="border-bottom: 1px solid var(--border-color); text-align: left;">
-                                    <th style="padding: 1rem;">Name</th>
-                                    <th style="padding: 1rem;">Serial Number</th>
-                                    <th style="padding: 1rem;">Manufacturer</th>
-                                    <th style="padding: 1rem;">Category</th>
-                                    <th style="padding: 1rem;">Date Received</th>
-                                    <th style="padding: 1rem;">Status</th>
-                                    <th style="padding: 1rem;">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="inventory-table">
-                                <!-- Populated by JS -->
-                            </tbody>
-                        </table>
-                    </div>
+        <!-- HISTORY VIEW -->
+        <div id="view-history" class="view-section" style="display: none;">
+            <div class="bg-surface glass-panel p-10 rounded-[2.5rem] diffused-shadow border border-outline-variant max-w-4xl mx-auto">
+                <h3 class="font-headline font-black text-3xl mb-2">Ledger Trace</h3>
+                <p class="text-on-surface-variant mb-8">Node transaction log synced directly with the blockchain.</p>
+                <div id="history-list" class="space-y-4">
+                    <!-- Populated by JS -->
                 </div>
             </div>
+        </div>
 
-            <!-- History View -->
-            <div id="view-history" class="view-section" style="display: none;">
-                <div class="card">
-                    <h3 style="margin-bottom: 1.5rem;">Activity History</h3>
-                    <div id="history-list">
-                        <!-- Populated by JS -->
-                    </div>
+        <!-- SUCCESS MODAL -->
+        <div id="saleSuccessModal" class="modal">
+            <div class="modal-content !max-w-2xl">
+                <div class="w-16 h-16 bg-primary-container/10 text-primary-container rounded-full flex items-center justify-center mx-auto mb-6">
+                    <span class="material-symbols-outlined text-3xl">check_circle</span>
                 </div>
-            </div>
-
-            <!-- Success Modal -->
-            <div id="saleSuccessModal" class="modal">
-                <div class="modal-content" style="text-align: center; max-width: 750px;">
-                    <div style="width: 60px; height: 60px; background: rgba(var(--success-color), 0.1); color: var(--success-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 1.5rem;">
-                        <i class="fas fa-check"></i>
-                    </div>
-                    <h3 style="margin-bottom: 1rem;">Sale Successful!</h3>
-                    <p style="color: var(--text-secondary); margin-bottom: 2rem;">The product ownership has been transferred to the consumer.</p>
-                    
-                    <div style="display: flex; gap: 2rem; margin-bottom: 2rem; text-align: left; align-items: stretch;">
-                        <!-- Details Column -->
-                        <div style="flex: 1; background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: var(--radius-md);">
-                            <div style="margin-bottom: 0.8rem;"><strong>Product:</strong> <span id="sale-product-name">Nike Air Max</span></div>
-                            <div style="margin-bottom: 0.8rem;"><strong>Serial:</strong> <span id="sale-serial-number">SN12345678</span></div>
-                            <div style="margin-bottom: 0.8rem;"><strong>Price:</strong> <span id="sale-price">₹120.00</span></div>
-                            <div style="margin-bottom: 0.8rem;"><strong>Consumer:</strong> <span id="sale-consumer-code">0x123...</span></div>
-                            <div style="margin-bottom: 0.8rem;"><strong>Date:</strong> <span id="sale-date">2023-10-27 10:30 AM</span></div>
-                            <div><strong>Transaction:</strong> <span id="sale-tx-hash" style="font-family: monospace; font-size: 0.8rem; color: var(--primary-color); word-break: break-all;">0xabc...</span></div>
-                        </div>
-
-                        <!-- QR Code Column -->
-                        <div style="flex: 0 0 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255,255,255,0.02); border-radius: var(--radius-md); padding: 1rem;">
-                            <div id="qrcode" style="background: white; padding: 10px; border-radius: 5px; margin-bottom: 0.5rem;"></div>
-                            <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0;">Scan to Verify</p>
+                <h3 class="font-headline font-black text-center text-3xl mb-2">Transfer Synthesized!</h3>
+                <p class="text-center text-on-surface-variant mb-8">Asset ownership has safely migrated to the consumer token.</p>
+                
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="md:col-span-2 bg-surface-container-low p-5 rounded-2xl border border-outline-variant space-y-3">
+                        <div class="flex justify-between text-sm"><span class="text-on-surface-variant">Asset:</span><strong id="sale-product-name">Name</strong></div>
+                        <div class="flex justify-between text-sm"><span class="text-on-surface-variant">Hash ID:</span><code id="sale-serial-number" class="font-mono text-xs">SN000</code></div>
+                        <div class="flex justify-between text-sm"><span class="text-on-surface-variant">Value:</span><strong id="sale-price">₹0.00</strong></div>
+                        <div class="flex justify-between text-sm"><span class="text-on-surface-variant">Consumer:</span><code id="sale-consumer-code" class="font-mono text-xs">0x0</code></div>
+                        <div class="flex justify-between text-sm"><span class="text-on-surface-variant">Date:</span><span id="sale-date" class="text-xs">Now</span></div>
+                        <div class="pt-3 border-t border-outline-variant flex justify-between gap-4">
+                            <span class="text-on-surface-variant text-xs flex-shrink-0">Tx Hash:</span>
+                            <code id="sale-tx-hash" class="font-mono text-[10px] text-blue-500 truncate block text-right">0x00...</code>
                         </div>
                     </div>
-                    
-                    <div style="display: flex; justify-content: center; gap: 1rem;">
-                        <button class="btn btn-primary" onclick="$('#saleSuccessModal').hide()">Close</button>
-                        <button class="btn btn-outline-primary" id="download-qr-btn">
-                            <i class="fas fa-download"></i> Download
-                        </button>
+
+                    <div class="bg-surface-container-low p-5 rounded-2xl border border-outline-variant flex flex-col items-center justify-center">
+                        <div id="qrcode" class="bg-white p-2 rounded-xl border border-outline-variant mb-3 w-32 h-32 flex items-center justify-center overflow-hidden">
+                            <!-- QR JS injection -->
+                        </div>
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Scan Receipt</span>
                     </div>
                 </div>
+                
+                <div class="flex justify-center gap-4">
+                    <button class="bg-surface border border-outline-variant px-6 py-2.5 rounded-xl font-bold font-headline text-sm hover:bg-surface-container-low" onclick="$('#saleSuccessModal').hide()">Dismiss</button>
+                    <button id="download-qr-btn" class="bg-blue-500 text-white px-6 py-2.5 rounded-xl font-bold font-headline text-sm hover:bg-blue-600 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">download</span> Export Audit Cipher
+                    </button>
+                </div>
             </div>
-        </main>
-    </div>
+        </div>
+
+    </main>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="assets/js/api-client.js"></script>
     <script src="assets/js/app.js"></script>
     <script src="assets/js/seller.js"></script>
-    <script>
-        // App initialized in seller.js
-    </script>
 </body>
 </html>

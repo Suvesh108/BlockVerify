@@ -1,123 +1,141 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consumer Dashboard - BlockVerify</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <!-- Modern 2026 Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: "class", theme: { extend: { colors: { background: "#F9FAFB", surface: "#FFFFFF", "surface-container-low": "#F3F4F5", "surface-container": "#EDEEEF", "on-surface": "#18181B", "on-surface-variant": "#71717A", "outline-variant": "rgba(226,232,240,0.5)", primary: "#006C49", "primary-container": "#10B981", "on-primary-container": "#00422B" }, fontFamily: { headline: ["Plus Jakarta Sans", "sans-serif"], body: ["Manrope", "sans-serif"], mono: ["JetBrains Mono", "monospace"] } } } }
+    </script>
+
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+        .glass-panel { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(24px); border: 1px solid var(--tw-colors-outline-variant); }
+        .diffused-shadow { box-shadow: 0 24px 48px -12px rgba(24, 24, 27, 0.06); }
+        .spring-hover { transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease; }
+        .spring-hover:hover { transform: scale(1.02); box-shadow: 0 24px 48px -10px rgba(16, 185, 129, 0.1); }
+        .nav-link.active { background: var(--tw-colors-primary-container); color: var(--tw-colors-on-primary-container); border-color: transparent; }
+        .nav-link { transition: all 0.3s ease; }
+        th { font-family: "Plus Jakarta Sans", sans-serif; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--tw-colors-on-surface-variant); padding: 1rem; font-weight: 700; border-bottom: 1px solid var(--tw-colors-outline-variant); }
+        td { padding: 1rem; border-bottom: 1px solid var(--tw-colors-outline-variant); font-size: 0.875rem; color: var(--tw-colors-on-surface); }
+        tr:last-child td { border-bottom: none; }
+    </style>
 </head>
-<body>
-    <div style="display: flex; min-height: 100vh;">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div style="margin-bottom: 3rem;">
-                <a href="index.html" class="navbar-brand">
-                    <i class="fas fa-cube"></i> BlockVerify
-                </a>
-            </div>
+<body class="bg-background font-body text-on-surface flex min-h-[100dvh] overflow-hidden">
+
+    <!-- Ambient Decor -->
+    <div class="absolute top-0 right-0 w-[50vw] h-[50vw] bg-primary-container/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar w-72 glass-panel border-r border-outline-variant flex flex-col justify-between p-6 relative z-10">
+        <div>
+            <!-- Brand -->
+            <a href="index.html" class="flex items-center gap-2 mb-12 group">
+                <div class="w-10 h-10 rounded-xl bg-on-surface flex items-center justify-center group-hover:bg-primary-container transition-colors duration-300">
+                    <span class="material-symbols-outlined text-white text-[18px]">deployed_code</span>
+                </div>
+                <span class="font-headline font-black tracking-tighter text-xl">BlockVerify</span>
+            </a>
             
-            <nav>
-                <a href="#" class="nav-link active">
-                    <i class="fas fa-tachometer-alt"></i> Dashboard
+            <!-- Navigation -->
+            <nav class="space-y-2">
+                <a href="#" class="nav-link active flex items-center gap-3 px-4 py-3 rounded-xl font-headline font-bold text-sm text-on-surface border border-transparent hover:bg-surface-container-low hover:border-outline-variant">
+                    <span class="material-symbols-outlined text-[20px]">dashboard</span> My Portfolio
                 </a>
-                <a href="verifyProducts.html" class="nav-link">
-                    <i class="fas fa-qrcode"></i> Verify Product
+                <a href="verifyProducts.html" class="nav-link flex items-center gap-3 px-4 py-3 rounded-xl font-headline font-bold text-sm text-on-surface border border-transparent hover:bg-surface-container-low hover:border-outline-variant">
+                    <span class="material-symbols-outlined text-[20px]">qr_code_scanner</span> Audit New Product
                 </a>
-
-
-
-
             </nav>
-            
-            <div style="margin-top: auto; padding-top: 2rem; border-top: 1px solid var(--border-color);">
-                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--success-color); display: flex; align-items: center; justify-content: center; font-weight: bold; color: #0f172a;">C</div>
+        </div>
+        
+        <!-- Profile -->
+        <div class="pt-6 border-t border-outline-variant/60">
+            <div class="flex items-center gap-3 mb-6 bg-surface-container-low p-3 rounded-xl border border-outline-variant">
+                <div class="w-10 h-10 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center font-bold font-headline">C</div>
+                <div class="overflow-hidden">
+                    <div class="font-bold font-headline text-sm truncate">Consumer</div>
+                    <div class="text-[10px] uppercase font-bold tracking-widest text-on-surface-variant font-mono truncate">Public Identity Node</div>
+                </div>
+            </div>
+            <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl font-headline font-bold text-sm text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors">
+                <span class="material-symbols-outlined text-[20px]">home</span> Return to Hub
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content flex-1 h-[100dvh] overflow-y-auto relative z-10 px-10 py-10 scroll-smooth">
+        
+        <header class="flex justify-between items-end mb-12">
+            <div>
+                <span class="text-[10px] font-headline font-bold tracking-[0.2em] uppercase text-primary-container mb-1 block">Ownership Ledger</span>
+                <h1 class="text-4xl font-headline font-black tracking-tighter">Identity Interface</h1>
+            </div>
+            <a href="verifyProducts.html" class="bg-primary-container text-on-primary-container px-6 py-3 rounded-xl font-bold font-headline text-sm spring-hover flex items-center gap-2">
+                <span class="material-symbols-outlined text-[18px]">search</span> Verify Fresh Cipher
+            </a>
+        </header>
+
+        <!-- DASHBOARD VIEW -->
+        <div id="view-dashboard" class="view-section">
+            <div class="grid lg:grid-cols-2 gap-6 mb-10">
+                <div class="bg-surface glass-panel p-6 rounded-[2rem] diffused-shadow border border-outline-variant flex items-start justify-between">
                     <div>
-                        <div style="font-weight: 600; color: white;">Consumer</div>
-                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Public Access</div>
+                        <h3 id="products-verified" class="text-5xl font-headline font-black mb-1">0</h3>
+                        <p class="text-on-surface-variant text-sm font-medium">Assets Verified</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-primary-container/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary-container text-2xl">verified_user</span>
+                    </div>
+                </div>
+                <div class="bg-surface glass-panel p-6 rounded-[2rem] diffused-shadow border border-outline-variant flex items-start justify-between">
+                    <div>
+                        <h3 id="total-value" class="text-5xl font-headline font-black mb-1">₹0</h3>
+                        <p class="text-on-surface-variant text-sm font-medium">Verified Value Synthesized</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-primary-container/20 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary-container text-2xl">account_balance_wallet</span>
                     </div>
                 </div>
             </div>
-        </aside>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; position: static; padding: 0; background: transparent; border: none;">
-                <div>
-                    <h1>Consumer Dashboard</h1>
-                    <p>View your purchase history and verify products.</p>
-                </div>
-                <a href="verifyProducts.html" class="btn btn-primary">
-                    <i class="fas fa-search"></i> Verify New Product
-                </a>
-            </header>
-
-            <!-- Stats Grid -->
-            <div class="row" style="margin-bottom: 2rem;">
-                <div class="col-6 fade-in-up">
-                    <div class="card">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
-                            <div>
-                                <h3 style="font-size: 2.5rem; margin-bottom: 0;" id="products-verified">0</h3>
-                                <p style="margin: 0;">Verified Purchases</p>
-                            </div>
-                            <div style="padding: 1rem; background: rgba(var(--success-color), 0.1); border-radius: var(--radius-md); color: var(--success-color);">
-                                <i class="fas fa-check-circle fa-lg"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 fade-in-up delay-100">
-                    <div class="card">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
-                            <div>
-                                <h3 style="font-size: 2.5rem; margin-bottom: 0;" id="total-value">₹0</h3>
-                                <p style="margin: 0;">Total Value</p>
-                            </div>
-                            <div style="padding: 1rem; background: rgba(var(--primary-hue), 80%, 60%, 0.1); border-radius: var(--radius-md); color: var(--primary-color);">
-                                <i class="fas fa-wallet fa-lg"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <!-- Purchase History -->
-            <div class="card fade-in-up delay-200" id="purchase-history">
-                <h3 style="margin-bottom: 1.5rem;">Purchase History</h3>
-                <div style="overflow-x: auto;">
-                    <table style="width: 100%; border-collapse: collapse; color: var(--text-secondary);">
-                        <thead>
-                            <tr style="border-bottom: 1px solid var(--border-color); text-align: left;">
-                                <th style="padding: 1rem;">Product ID</th>
-                                <th style="padding: 1rem;">Name</th>
-                                <th style="padding: 1rem;">Brand</th>
-                                <th style="padding: 1rem;">Price</th>
-                                <th style="padding: 1rem;">Date</th>
-                                <th style="padding: 1rem;">Status</th>
+            <div id="purchase-history" class="bg-surface glass-panel rounded-[2rem] diffused-shadow border border-outline-variant overflow-hidden">
+                <div class="px-8 py-6 border-b border-outline-variant">
+                    <h3 class="font-headline font-bold text-xl">Cryptographic Custody Trace</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-surface-container-low/50">
+                            <tr>
+                                <th>Hash ID</th><th>Designation</th><th>Genesis Node</th><th>Terminal Value</th><th>Transfer Date</th><th>State</th>
                             </tr>
                         </thead>
                         <tbody id="purchase-history-body">
-                            <!-- Dynamic Content -->
+                            <!-- Populated by JS -->
                         </tbody>
                     </table>
                 </div>
             </div>
+        </div>
 
-
-
-        </main>
-    </div>
+    </main>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="assets/js/api-client.js"></script>
     <script src="assets/js/consumer.js"></script>
     <script src="assets/js/app.js"></script>
     <script>
-        // Initialize app
         $(window).on('load', function() {
-            BlockchainApp.init('consumer');
+            if(window.BlockchainApp) BlockchainApp.init('consumer');
         });
     </script>
 </body>

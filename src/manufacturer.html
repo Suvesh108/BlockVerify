@@ -1,335 +1,327 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manufacturer Dashboard - BlockVerify</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <!-- Modern 2026 Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: "class", theme: { extend: { colors: { background: "#F9FAFB", surface: "#FFFFFF", "surface-container-low": "#F3F4F5", "surface-container": "#EDEEEF", "on-surface": "#18181B", "on-surface-variant": "#71717A", "outline-variant": "rgba(226,232,240,0.5)", primary: "#006C49", "primary-container": "#10B981", "on-primary-container": "#00422B" }, fontFamily: { headline: ["Plus Jakarta Sans", "sans-serif"], body: ["Manrope", "sans-serif"], mono: ["JetBrains Mono", "monospace"] } } } }
+    </script>
+
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+        .glass-panel { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(24px); border: 1px solid var(--tw-colors-outline-variant); }
+        .diffused-shadow { box-shadow: 0 24px 48px -12px rgba(24, 24, 27, 0.06); }
+        .spring-hover { transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease; }
+        .spring-hover:hover { transform: scale(1.02); box-shadow: 0 24px 48px -10px rgba(16, 185, 129, 0.1); }
+        .nav-link.active { background: var(--tw-colors-primary-container); color: var(--tw-colors-on-primary-container); border-color: transparent; }
+        .nav-link { transition: all 0.3s ease; }
+        
+        .modal { display: none; position: fixed; inset: 0; z-index: 100; background: rgba(24,24,27,0.4); backdrop-filter: blur(8px); }
+        .modal-content { background: #FFFFFF; border-radius: 2rem; max-width: 600px; margin: 5dvh auto; padding: 2.5rem; border: 1px solid var(--tw-colors-outline-variant); box-shadow: 0 40px 80px -20px rgba(0,0,0,0.2); position: relative; }
+        .close { position: absolute; top: 1.5rem; right: 1.5rem; cursor: pointer; color: var(--tw-colors-on-surface-variant); }
+        
+        .input-glass { background: rgba(243,244,245,0.7); border: 1px solid var(--tw-colors-outline-variant); border-radius: 1rem; width: 100%; padding: 0.875rem 1rem; color: var(--tw-colors-on-surface); font-family: inherit; transition: all 0.3s; }
+        .input-glass:focus { outline: none; border-color: var(--tw-colors-primary-container); background: #FFFFFF; box-shadow: 0 0 0 4px rgba(16,185,129,0.1); }
+        
+        th { font-family: "Plus Jakarta Sans", sans-serif; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--tw-colors-on-surface-variant); padding: 1rem; font-weight: 700; border-bottom: 1px solid var(--tw-colors-outline-variant); }
+        td { padding: 1rem; border-bottom: 1px solid var(--tw-colors-outline-variant); font-size: 0.875rem; color: var(--tw-colors-on-surface); }
+        tr:last-child td { border-bottom: none; }
+    </style>
 </head>
-<body>
-    <div style="display: flex; min-height: 100vh;">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div style="margin-bottom: 3rem;">
-                <a href="index.html" class="navbar-brand">
-                    <i class="fas fa-cube"></i> BlockVerify
-                </a>
-            </div>
+<body class="bg-background font-body text-on-surface flex min-h-[100dvh] overflow-hidden">
+
+    <!-- Ambient Decor -->
+    <div class="absolute top-0 right-0 w-[50vw] h-[50vw] bg-primary-container/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar w-72 glass-panel border-r border-outline-variant flex flex-col justify-between p-6 relative z-10">
+        <div>
+            <!-- Brand -->
+            <a href="index.html" class="flex items-center gap-2 mb-12 group">
+                <div class="w-10 h-10 rounded-xl bg-on-surface flex items-center justify-center group-hover:bg-primary-container transition-colors duration-300">
+                    <span class="material-symbols-outlined text-white text-[18px]">deployed_code</span>
+                </div>
+                <span class="font-headline font-black tracking-tighter text-xl">BlockVerify</span>
+            </a>
             
-            <nav>
-                <a href="#" class="nav-link active" id="nav-dashboard">
-                    <i class="fas fa-tachometer-alt"></i> Dashboard
+            <!-- Navigation -->
+            <nav class="space-y-2">
+                <a href="#" class="nav-link active flex items-center gap-3 px-4 py-3 rounded-xl font-headline font-bold text-sm text-on-surface border border-transparent hover:bg-surface-container-low hover:border-outline-variant" id="nav-dashboard">
+                    <span class="material-symbols-outlined text-[20px]">dashboard</span> Dashboard
                 </a>
-                <a href="#" class="nav-link" id="nav-add-product">
-                    <i class="fas fa-plus-circle"></i> Add Product
+                <a href="#" class="nav-link flex items-center gap-3 px-4 py-3 rounded-xl font-headline font-bold text-sm text-on-surface border border-transparent hover:bg-surface-container-low hover:border-outline-variant" id="nav-add-product">
+                    <span class="material-symbols-outlined text-[20px]">add_circle</span> Register Asset
                 </a>
-                <a href="#" class="nav-link" id="nav-products">
-                    <i class="fas fa-list"></i> My Products
+                <a href="#" class="nav-link flex items-center gap-3 px-4 py-3 rounded-xl font-headline font-bold text-sm text-on-surface border border-transparent hover:bg-surface-container-low hover:border-outline-variant" id="nav-products">
+                    <span class="material-symbols-outlined text-[20px]">inventory_2</span> My Assets
                 </a>
-                <a href="#" class="nav-link" id="nav-history">
-                    <i class="fas fa-history"></i> History
+                <a href="#" class="nav-link flex items-center gap-3 px-4 py-3 rounded-xl font-headline font-bold text-sm text-on-surface border border-transparent hover:bg-surface-container-low hover:border-outline-variant" id="nav-history">
+                    <span class="material-symbols-outlined text-[20px]">history</span> Ledger History
                 </a>
             </nav>
-            
-            <div style="margin-top: auto; padding-top: 2rem; border-top: 1px solid var(--border-color);">
-                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--primary-color); display: flex; align-items: center; justify-content: center; font-weight: bold; color: #0f172a;" id="user-avatar">M</div>
+        </div>
+        
+        <!-- Profile & Logout -->
+        <div class="pt-6 border-t border-outline-variant/60">
+            <div class="flex items-center gap-3 mb-6 bg-surface-container-low p-3 rounded-xl border border-outline-variant">
+                <div class="w-10 h-10 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center font-bold font-headline" id="user-avatar">M</div>
+                <div class="overflow-hidden">
+                    <div class="font-bold font-headline text-sm truncate" id="user-name">Manufacturer Node</div>
+                    <div class="text-xs text-on-surface-variant font-mono truncate" id="user-email">auth@node.local</div>
+                </div>
+            </div>
+            <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl font-headline font-bold text-sm text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors">
+                <span class="material-symbols-outlined text-[20px]">logout</span> Disconnect Session
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content flex-1 h-[100dvh] overflow-y-auto relative z-10 px-10 py-10 scroll-smooth">
+        
+        <header class="flex justify-between items-end mb-12">
+            <div>
+                <span class="text-[10px] font-headline font-bold tracking-[0.2em] uppercase text-primary-container mb-1 block">Genesis Node</span>
+                <h1 class="text-4xl font-headline font-black tracking-tighter">Command Center</h1>
+            </div>
+            <button class="btn-register-product bg-on-surface text-surface px-6 py-3 rounded-xl font-bold font-headline text-sm spring-hover flex items-center gap-2" id="header-register-btn">
+                <span class="material-symbols-outlined text-[18px]">add</span> Initialize Asset
+            </button>
+        </header>
+
+        <!-- DASHBOARD VIEW -->
+        <div id="view-dashboard" class="view-section">
+            <div class="grid lg:grid-cols-3 gap-6 mb-10">
+                <div class="bg-surface glass-panel p-6 rounded-[2rem] diffused-shadow border border-outline-variant flex items-start justify-between">
                     <div>
-                        <div style="font-weight: 600; color: white;" id="user-name">Manufacturer</div>
-                        <div style="font-size: 0.8rem; color: var(--text-secondary);" id="user-email"></div>
+                        <h3 id="products-registered" class="text-5xl font-headline font-black mb-1">0</h3>
+                        <p class="text-on-surface-variant text-sm font-medium">Assets Minted</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-primary-container/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary-container text-2xl">deployed_code</span>
                     </div>
                 </div>
-                <a href="index.html" class="nav-link" style="color: var(--danger-color);">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </a>
-            </div>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; position: static; padding: 0; background: transparent; border: none;">
-                <div>
-                    <h1>Manufacturer Dashboard</h1>
-                    <p>Manage your products and supply chain.</p>
-                </div>
-                <button class="btn btn-primary btn-register-product" id="header-register-btn">
-                    <i class="fas fa-plus"></i> Register New Product
-                </button>
-            </header>
-
-            <!-- Dashboard View -->
-            <div id="view-dashboard" class="view-section">
-                <!-- Stats Grid -->
-                <div class="row" style="margin-bottom: 2rem;">
-                    <div class="col-4 fade-in-up">
-                        <div class="card">
-                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
-                                <div>
-                                    <h3 id="products-registered" style="font-size: 2.5rem; margin-bottom: 0;">0</h3>
-                                    <p style="margin: 0;">Total Products</p>
-                                </div>
-                                <div style="padding: 1rem; background: rgba(var(--primary-hue), 80%, 60%, 0.1); border-radius: var(--radius-md); color: var(--primary-color);">
-                                    <i class="fas fa-box fa-lg"></i>
-                                </div>
-                            </div>
-                        </div>
+                <div class="bg-surface glass-panel p-6 rounded-[2rem] diffused-shadow border border-outline-variant flex items-start justify-between">
+                    <div>
+                        <h3 id="transfers-to-sellers" class="text-5xl font-headline font-black mb-1">0</h3>
+                        <p class="text-on-surface-variant text-sm font-medium">Transferred</p>
                     </div>
-                    <div class="col-4 fade-in-up delay-100">
-                        <div class="card">
-                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
-                                <div>
-                                    <h3 id="transfers-to-sellers" style="font-size: 2.5rem; margin-bottom: 0;">0</h3>
-                                    <p style="margin: 0;">Sold to Retailers</p>
-                                </div>
-                                <div style="padding: 1rem; background: rgba(var(--secondary-hue), 80%, 60%, 0.1); border-radius: var(--radius-md); color: var(--secondary-color);">
-                                    <i class="fas fa-truck fa-lg"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4 fade-in-up delay-200">
-                        <div class="card">
-                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
-                                <div>
-                                    <h3 id="products-in-stock" style="font-size: 2.5rem; margin-bottom: 0;">0</h3>
-                                    <p style="margin: 0;">In Stock</p>
-                                </div>
-                                <div style="padding: 1rem; background: rgba(var(--success-color), 0.1); border-radius: var(--radius-md); color: var(--success-color);">
-                                    <i class="fas fa-warehouse fa-lg"></i>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-blue-500 text-2xl">local_shipping</span>
                     </div>
                 </div>
-
-                <!-- Recent Products Table -->
-                <div class="card fade-in-up delay-300">
-                    <h3 style="margin-bottom: 1.5rem;">Recent Products</h3>
-                    <div style="overflow-x: auto;">
-                        <table style="width: 100%; border-collapse: collapse; color: var(--text-secondary);">
-                            <thead>
-                                <tr style="border-bottom: 1px solid var(--border-color); text-align: left;">
-                                    <th style="padding: 1rem;">Product ID</th>
-                                    <th style="padding: 1rem;">Name</th>
-                                    <th style="padding: 1rem;">Brand</th>
-                                    <th style="padding: 1rem;">Category</th>
-                                    <th style="padding: 1rem;">Price</th>
-                                    <th style="padding: 1rem;">Status</th>
-                                    <th style="padding: 1rem;">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="product-table">
-                                <!-- Products will be loaded here dynamically -->
-                                <tr>
-                                    <td colspan="6" style="text-align: center; padding: 2rem;">Loading products...</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="bg-surface glass-panel p-6 rounded-[2rem] diffused-shadow border border-outline-variant flex items-start justify-between">
+                    <div>
+                        <h3 id="products-in-stock" class="text-5xl font-headline font-black mb-1">0</h3>
+                        <p class="text-on-surface-variant text-sm font-medium">In Vault</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-amber-500 text-2xl">inventory_2</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Add Product View -->
-            <div id="view-add-product" class="view-section" style="display: none;">
-                <div class="card fade-in-up">
-                    <h3 style="margin-bottom: 1.5rem;">Register New Product</h3>
-                    <form id="add-product-form">
-                        <div class="row">
-                            <div class="col-6" style="margin-bottom: 1rem;">
-                                <label style="display: block; margin-bottom: 0.5rem;">Product Name</label>
-                                <input type="text" id="product-name" class="form-control" placeholder="e.g. Premium Sneaker" required style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: white;">
-                            </div>
-                            <div class="col-6" style="margin-bottom: 1rem;">
-                                <label style="display: block; margin-bottom: 0.5rem;">Brand</label>
-                                <input type="text" id="product-brand" class="form-control" placeholder="e.g. Nike" required style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: white;">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6" style="margin-bottom: 1rem;">
-                                <label style="display: block; margin-bottom: 0.5rem;">Price (₹)</label>
-                                <input type="number" id="product-price" class="form-control" placeholder="e.g. 150" required style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: white;">
-                            </div>
-                            <div class="col-6" style="margin-bottom: 1rem;">
-                                <label style="display: block; margin-bottom: 0.5rem;">Category</label>
-                                <select id="product-category" class="form-control" style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: white;">
-                                    <option value="Footwear" style="color: black;">Footwear</option>
-                                    <option value="Electronics" style="color: black;">Electronics</option>
-                                    <option value="Apparel" style="color: black;">Apparel</option>
-                                    <option value="Accessories" style="color: black;">Accessories</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6" style="margin-bottom: 1rem;">
-                                <label style="display: block; margin-bottom: 0.5rem;">Quantity</label>
-                                <input type="number" id="product-quantity" class="form-control" value="1" min="1" required style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: white;">
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">
-                            <i class="fas fa-check"></i> Register Product
-                        </button>
-                    </form>
+            <div class="bg-surface glass-panel rounded-[2rem] diffused-shadow border border-outline-variant overflow-hidden">
+                <div class="px-8 py-6 border-b border-outline-variant flex items-center justify-between">
+                    <h3 class="font-headline font-bold text-xl">Recent Asset Mints</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-surface-container-low/50">
+                            <tr>
+                                <th>Hash ID</th><th>Designation</th><th>Creator</th><th>Class</th><th>Terminal Value</th><th>State</th><th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="product-table">
+                            <tr><td colspan="7" class="text-center py-8 text-on-surface-variant">Synchronizing ledger data...</td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+        </div>
 
-            <!-- My Products View -->
-            <div id="view-products" class="view-section" style="display: none;">
-                <div class="card fade-in-up">
-                    <h3 style="margin-bottom: 1.5rem;">All Products</h3>
-                    <div style="overflow-x: auto;">
-                        <table style="width: 100%; border-collapse: collapse; color: var(--text-secondary);">
-                            <thead>
-                                <tr style="border-bottom: 1px solid var(--border-color); text-align: left;">
-                                    <th style="padding: 1rem;">Product ID</th>
-                                    <th style="padding: 1rem;">Name</th>
-                                    <th style="padding: 1rem;">Brand</th>
-                                    <th style="padding: 1rem;">Category</th>
-                                    <th style="padding: 1rem;">Price</th>
-                                    <th style="padding: 1rem;">Status</th>
-                                    <th style="padding: 1rem;">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="all-products-table">
-                                <!-- Will be populated by JS -->
-                            </tbody>
-                        </table>
-                    </div>
+        <!-- ADD PRODUCT VIEW -->
+        <div id="view-add-product" class="view-section" style="display: none;">
+            <div class="bg-surface glass-panel p-10 rounded-[2.5rem] diffused-shadow border border-outline-variant max-w-4xl mx-auto">
+                <div class="mb-10">
+                    <h3 class="font-headline font-black text-3xl">Asset Genesis</h3>
+                    <p class="text-on-surface-variant">Encode a new physical asset into the verification ledger.</p>
                 </div>
-            </div>
-
-            <!-- History View -->
-            <div id="view-history" class="view-section" style="display: none;">
-                <div class="card fade-in-up">
-                    <h3 style="margin-bottom: 1.5rem;">Transaction History</h3>
-                    <p style="color: var(--text-secondary);">Recent blockchain transactions will appear here.</p>
-                    <div id="history-list">
-                        <!-- History items will be loaded here -->
-                        <div style="padding: 1rem; border-bottom: 1px solid var(--border-light);">
-                            <div style="display: flex; justify-content: space-between;">
-                                <strong>System Initialized</strong>
-                                <span style="font-size: 0.8rem; color: var(--text-secondary);">Just now</span>
-                            </div>
-                            <p style="margin: 0.5rem 0 0; font-size: 0.9rem;">Dashboard loaded successfully.</p>
+                
+                <form id="add-product-form" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-[11px] font-headline font-bold uppercase tracking-widest text-on-surface-variant flex items-center gap-2"><span class="material-symbols-outlined text-[14px]">label</span> Designation</label>
+                            <input type="text" id="product-name" class="input-glass" placeholder="e.g. Apex Drone v2" required>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sell Product Modal -->
-            <div id="sellProductModal" class="modal">
-                <div class="modal-content">
-                    <span class="close" onclick="document.getElementById('sellProductModal').style.display='none'">&times;</span>
-                    <h3 style="margin-bottom: 1.5rem;">Sell Product to Retailer</h3>
-                    <form id="sell-form">
-                        <div style="margin-bottom: 1rem;">
-                            <label style="display: block; margin-bottom: 0.5rem;">Product Serial Number</label>
-                            <input type="text" id="productSN" class="form-control" readonly style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: white;">
+                        <div class="space-y-2">
+                            <label class="text-[11px] font-headline font-bold uppercase tracking-widest text-on-surface-variant flex items-center gap-2"><span class="material-symbols-outlined text-[14px]">verified</span> Creator Entity</label>
+                            <input type="text" id="product-brand" class="input-glass" placeholder="e.g. Apex Tech" required>
                         </div>
-                        <div style="margin-bottom: 1rem;">
-                            <label style="display: block; margin-bottom: 0.5rem;">Retailer Code / ID</label>
-                            <input type="text" id="sellerCode" class="form-control" placeholder="e.g. SELL001" required style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: white;">
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-sell-to-seller" style="width: 100%;">
-                            Confirm Transfer
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            <!-- View Seller Modal -->
-            <div id="viewSellerModal" class="modal">
-                <div class="modal-content">
-                    <span class="close" onclick="document.getElementById('viewSellerModal').style.display='none'">&times;</span>
-                    <h3 style="margin-bottom: 1.5rem;">Seller Details</h3>
-                    <div style="margin-bottom: 1rem;">
-                        <strong>Name:</strong> <span id="seller-detail-name"></span>
-                    </div>
-                    <div style="margin-bottom: 1rem;">
-                        <strong>ID:</strong> <span id="seller-detail-id"></span>
-                    </div>
-                    <div style="margin-bottom: 1rem;">
-                        <strong>Email:</strong> <span id="seller-detail-email"></span>
-                    </div>
-                    <div style="margin-bottom: 1rem;">
-                        <strong>Address:</strong> <span id="seller-detail-address" style="word-break: break-all;"></span>
-                    </div>
-                    <div style="margin-bottom: 1rem;">
-                        <strong>Authorized Date:</strong> <span id="seller-detail-date"></span>
-                    </div>
-                    <div style="margin-bottom: 1rem;">
-                        <strong>Status:</strong> <span id="seller-detail-status"></span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Manage Seller Modal -->
-            <div id="manageSellerModal" class="modal">
-                <div class="modal-content">
-                    <span class="close" onclick="document.getElementById('manageSellerModal').style.display='none'">&times;</span>
-                    <h3 style="margin-bottom: 1.5rem;">Manage Seller</h3>
-                    <div style="margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color);">
-                        <h4 id="manage-seller-name" style="margin-bottom: 0.5rem;">Seller Name</h4>
-                        <p id="manage-seller-id" style="color: var(--text-secondary); margin: 0;">ID</p>
-                        <input type="hidden" id="manage-seller-original-id">
                     </div>
                     
-                    <div style="margin-bottom: 1rem;">
-                        <label style="display: block; margin-bottom: 0.5rem;">Email</label>
-                        <input type="email" id="manage-seller-email" class="form-control" style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: white;">
-                    </div>
-                    
-                    <div style="margin-bottom: 1rem;">
-                        <label style="display: block; margin-bottom: 0.5rem;">Status</label>
-                        <select id="manage-seller-status" class="form-control" style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: white;">
-                            <option value="Active">Active</option>
-                            <option value="Suspended">Suspended</option>
-                            <option value="Revoked">Revoked</option>
-                        </select>
-                    </div>
-
-                    <div style="margin-bottom: 1rem;">
-                        <label style="display: block; margin-bottom: 0.5rem;">Notes</label>
-                        <textarea id="manage-seller-notes" class="form-control" rows="3" style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: white;"></textarea>
-                    </div>
-
-                    <div style="margin-bottom: 1.5rem;">
-                        <label style="display: block; margin-bottom: 0.5rem;">Permissions</label>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                                <input type="checkbox" id="permission-sell"> Can Sell
-                            </label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                                <input type="checkbox" id="permission-discount"> Can Discount
-                            </label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                                <input type="checkbox" id="permission-bulk"> Bulk Transfer
-                            </label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                                <input type="checkbox" id="permission-api"> API Access
-                            </label>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-[11px] font-headline font-bold uppercase tracking-widest text-on-surface-variant flex items-center gap-2"><span class="material-symbols-outlined text-[14px]">payments</span> Terminal Value (₹)</label>
+                            <input type="number" id="product-price" class="input-glass font-mono" placeholder="0.00" required>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[11px] font-headline font-bold uppercase tracking-widest text-on-surface-variant flex items-center gap-2"><span class="material-symbols-outlined text-[14px]">category</span> Class</label>
+                            <select id="product-category" class="input-glass appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%208l5%205%205-5%22%20fill%3D%22none%22%20stroke%3D%22%2371717A%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-[position:right_1rem_center] bg-no-repeat cursor-pointer">
+                                <option value="Footwear">Footwear</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Apparel">Apparel</option>
+                                <option value="Accessories">Accessories</option>
+                            </select>
                         </div>
                     </div>
 
-                    <div style="display: flex; gap: 1rem; justify-content: flex-end;">
-                        <button type="button" class="btn btn-outline-danger" id="delete-seller">
-                            <i class="fas fa-trash"></i> Delete
-                        </button>
-                        <button type="button" class="btn btn-outline-secondary" id="cancel-manage-seller">Cancel</button>
-                        <button type="button" class="btn btn-primary" id="save-seller-changes">Save Changes</button>
+                    <div class="grid md:grid-cols-2 gap-6 pb-6 border-b border-outline-variant">
+                        <div class="space-y-2">
+                            <label class="text-[11px] font-headline font-bold uppercase tracking-widest text-on-surface-variant flex items-center gap-2"><span class="material-symbols-outlined text-[14px]">layers</span> Batch Quantity</label>
+                            <input type="number" id="product-quantity" class="input-glass font-mono" value="1" min="1" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="w-full md:w-auto bg-primary-container text-on-primary-container px-8 py-4 rounded-xl font-bold font-headline text-lg spring-hover flex items-center justify-center gap-3">
+                        <span class="material-symbols-outlined">data_object</span> Mint to Ledger
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- MY PRODUCTS VIEW -->
+        <div id="view-products" class="view-section" style="display: none;">
+            <div class="bg-surface glass-panel rounded-[2.5rem] diffused-shadow border border-outline-variant overflow-hidden">
+                <div class="px-8 py-8 border-b border-outline-variant">
+                    <h3 class="font-headline font-black text-2xl">Vault Directory</h3>
+                    <p class="text-on-surface-variant mt-1">Comprehensive list of all synthesized physical assets.</p>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-surface-container-low/50">
+                            <tr>
+                                <th>Hash ID</th><th>Designation</th><th>Creator</th><th>Class</th><th>Terminal Value</th><th>State</th><th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="all-products-table">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- HISTORY VIEW -->
+        <div id="view-history" class="view-section" style="display: none;">
+            <div class="bg-surface glass-panel p-10 rounded-[2.5rem] diffused-shadow border border-outline-variant max-w-4xl mx-auto">
+                <h3 class="font-headline font-black text-3xl mb-2">Ledger Stream</h3>
+                <p class="text-on-surface-variant mb-8">Unalterable chronological flow of node operations.</p>
+                <div id="history-list" class="space-y-4">
+                    <!-- Basic placeholder item matching original JS append format typically -->
+                    <div class="p-6 bg-surface-container-low rounded-2xl border border-outline-variant flex justify-between items-start">
+                        <div>
+                            <strong class="font-headline font-bold block mb-1">Node Authorized</strong>
+                            <p class="text-sm text-on-surface-variant m-0">Secure handshake established with the genesis node.</p>
+                        </div>
+                        <span class="text-xs font-mono text-on-surface-variant bg-surface px-2 py-1 rounded border border-outline-variant">Just now</span>
                     </div>
                 </div>
             </div>
-        </main>
-    </div>
+        </div>
+
+        <!-- MODALS -->
+        <!-- Sell Product Modal -->
+        <div id="sellProductModal" class="modal">
+            <div class="modal-content">
+                <span class="close material-symbols-outlined" onclick="document.getElementById('sellProductModal').style.display='none'">close</span>
+                <h3 class="font-headline font-black text-2xl mb-6">Transfer Asset Custody</h3>
+                <form id="sell-form" class="space-y-5">
+                    <div class="space-y-2">
+                        <label class="text-[11px] font-headline font-bold uppercase tracking-widest text-on-surface-variant">Asset Hash</label>
+                        <input type="text" id="productSN" class="input-glass font-mono opacity-70 cursor-not-allowed" readonly>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[11px] font-headline font-bold uppercase tracking-widest text-on-surface-variant">Recipient Node (Seller ID)</label>
+                        <input type="text" id="sellerCode" class="input-glass font-mono" placeholder="e.g. SELL001" required>
+                    </div>
+                    <button type="submit" class="btn-sell-to-seller w-full bg-on-surface text-surface py-4 rounded-xl font-bold font-headline text-lg spring-hover mt-4 flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined">sync_alt</span> Execute Transfer
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- View/Manage Seller Modals retained but merged styles -> keeping original IDs -->
+        <div id="viewSellerModal" class="modal">
+            <div class="modal-content">
+                <span class="close material-symbols-outlined" onclick="document.getElementById('viewSellerModal').style.display='none'">close</span>
+                <h3 class="font-headline font-black text-2xl mb-6">Node Diagnostics</h3>
+                <div class="space-y-4 text-sm">
+                    <div class="flex flex-col bg-surface-container-low p-3 rounded-xl"><strong class="text-xs text-on-surface-variant uppercase tracking-widest mb-1">Designation</strong> <span id="seller-detail-name" class="font-bold"></span></div>
+                    <div class="flex flex-col bg-surface-container-low p-3 rounded-xl"><strong class="text-xs text-on-surface-variant uppercase tracking-widest mb-1">Hash ID</strong> <span id="seller-detail-id" class="font-mono"></span></div>
+                    <div class="flex flex-col bg-surface-container-low p-3 rounded-xl"><strong class="text-xs text-on-surface-variant uppercase tracking-widest mb-1">Communication Vector</strong> <span id="seller-detail-email"></span></div>
+                    <div class="flex flex-col bg-surface-container-low p-3 rounded-xl"><strong class="text-xs text-on-surface-variant uppercase tracking-widest mb-1">Physical Coordinates</strong> <span id="seller-detail-address" class="break-all"></span></div>
+                    <div class="flex flex-col bg-surface-container-low p-3 rounded-xl"><strong class="text-xs text-on-surface-variant uppercase tracking-widest mb-1">Genesis Date</strong> <span id="seller-detail-date"></span></div>
+                    <div class="flex flex-col bg-surface-container-low p-3 rounded-xl"><strong class="text-xs text-on-surface-variant uppercase tracking-widest mb-1">State</strong> <span id="seller-detail-status"></span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manage Seller Modal (Original logic hidden in CSS/JS but keeping markup) -->
+        <div id="manageSellerModal" class="modal">
+            <div class="modal-content">
+                <span class="close material-symbols-outlined" onclick="document.getElementById('manageSellerModal').style.display='none'">close</span>
+                <h3 class="font-headline font-black text-2xl mb-2">Configure Node</h3>
+                
+                <div class="mb-6 pb-4 border-b border-outline-variant">
+                    <h4 id="manage-seller-name" class="font-bold text-lg mb-1">Node Name</h4>
+                    <p id="manage-seller-id" class="text-on-surface-variant font-mono text-xs">ID</p>
+                    <input type="hidden" id="manage-seller-original-id">
+                </div>
+                
+                <div class="space-y-4 mb-6">
+                    <div class="space-y-1"><label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Email</label><input type="email" id="manage-seller-email" class="input-glass"></div>
+                    <div class="space-y-1"><label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Status</label><select id="manage-seller-status" class="input-glass"><option value="Active">Operational</option><option value="Suspended">Suspended</option><option value="Revoked">Revoked</option></select></div>
+                    <div class="space-y-1"><label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Diagnostics Notes</label><textarea id="manage-seller-notes" class="input-glass" rows="2"></textarea></div>
+                    
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Capabilities Protocol</label>
+                        <div class="grid grid-cols-2 gap-3 bg-surface-container-low p-4 rounded-xl">
+                            <label class="flex items-center gap-2 cursor-pointer text-sm font-medium"><input type="checkbox" id="permission-sell" class="accent-primary-container w-4 h-4"> Execute Sell</label>
+                            <label class="flex items-center gap-2 cursor-pointer text-sm font-medium"><input type="checkbox" id="permission-discount" class="accent-primary-container w-4 h-4"> Market Adjustment</label>
+                            <label class="flex items-center gap-2 cursor-pointer text-sm font-medium"><input type="checkbox" id="permission-bulk" class="accent-primary-container w-4 h-4"> Batch Transfer</label>
+                            <label class="flex items-center gap-2 cursor-pointer text-sm font-medium"><input type="checkbox" id="permission-api" class="accent-primary-container w-4 h-4"> Direct API Auth</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 justify-end">
+                    <button type="button" class="bg-red-100 text-red-600 px-4 py-2 rounded-xl font-bold flex items-center gap-2 hover:bg-red-200" id="delete-seller"><span class="material-symbols-outlined text-[18px]">delete</span> Terminate</button>
+                    <button type="button" class="bg-surface-container-high text-on-surface px-4 py-2 rounded-xl font-bold hover:bg-surface-container-highest" id="cancel-manage-seller">Abort</button>
+                    <button type="button" class="bg-primary-container text-on-primary-container px-4 py-2 rounded-xl font-bold hover:brightness-95" id="save-seller-changes">Commit Config</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="assets/js/api-client.js"></script>
     <script src="assets/js/app.js"></script>
-    <script src="assets/js/manufacturer.js"></script>
     <script>
-        // App initialized in manufacturer.js
+        // Override default toggle active class function before manufacturer.js runs if necessary
+        // since manufacturer.js uses hide() and show() and removes/adds active class appropriately.
     </script>
+    <script src="assets/js/manufacturer.js"></script>
 </body>
 </html>

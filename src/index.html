@@ -1,152 +1,328 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="BlockVerify - A blockchain-based anti-counterfeit product verification system ensuring authenticity across the entire supply chain.">
-    <title>BlockVerify - Anti-Counterfeit Product System</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <meta name="description" content="BlockVerify - 2026 Neural Supply Chain Authenticator.">
+    <title>BlockVerify | Adaptive Immutability</title>
+    
+    <!-- Modern 2026 Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS (Liquid Humanist Profile) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              background: "#F9FAFB",
+              surface: "#FFFFFF",
+              "surface-container-low": "#F3F4F5",
+              "surface-container": "#EDEEEF",
+              "surface-container-highest": "#E1E3E4",
+              "on-surface": "#18181B",
+              "on-surface-variant": "#71717A",
+              "outline-variant": "rgba(226,232,240,0.5)",
+              primary: "#006C49",
+              "primary-container": "#10B981",
+              "on-primary-container": "#00422B",
+            },
+            fontFamily: {
+              headline: ["Plus Jakarta Sans", "sans-serif"],
+              body: ["Manrope", "sans-serif"],
+              mono: ["JetBrains Mono", "monospace"]
+            }
+          }
+        }
+      }
+    </script>
+    
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+        
+        /* 2026 Core Aesthetics */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--tw-colors-outline-variant, rgba(226,232,240,0.5));
+        }
+        .diffused-shadow {
+            box-shadow: 0 24px 48px -12px rgba(24, 24, 27, 0.06);
+        }
+        
+        /* Perpetual Motion & Spring Physics */
+        .spring-hover {
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+        }
+        .spring-hover:active { transform: scale(0.98); }
+        .spring-hover:hover {
+            transform: scale(1.02);
+            box-shadow: 0 32px 64px -16px rgba(16, 185, 129, 0.12);
+        }
+        
+        /* Liquid Micro-interaction */
+        .data-shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 3s infinite linear;
+        }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    </style>
 </head>
-<body>
-    <!-- Navigation -->
-    <header id="navbar">
-        <div class="container">
-            <nav class="navbar">
-                <a href="index.html" class="navbar-brand">
-                    <i class="fas fa-cube fa-lg"></i> BlockVerify
+
+<body class="bg-background font-body text-on-surface antialiased selection:bg-primary-container/30">
+
+    <!-- Sticky Navigation (Liquid Glass) -->
+    <nav class="sticky top-0 z-50 w-full glass-panel border-b border-white/40">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Brand -->
+            <a href="index.html" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 rounded-xl bg-on-surface flex items-center justify-center group-hover:bg-primary-container transition-colors duration-300">
+                    <span class="material-symbols-outlined text-white text-sm" data-weight="fill">deployed_code</span>
+                </div>
+                <span class="font-headline font-black tracking-tighter text-xl">BlockVerify</span>
+            </a>
+            
+            <!-- Links -->
+            <div class="hidden md:flex items-center gap-10 font-headline text-sm font-semibold tracking-tight text-on-surface-variant">
+                <a href="index.html" class="text-on-surface border-b-2 border-primary-container pb-1">Home</a>
+                <a href="manufacturer.html" class="hover:text-on-surface transition-colors">Manufacturer</a>
+                <a href="seller.html" class="hover:text-on-surface transition-colors">Seller</a>
+                <a href="consumer.html" class="hover:text-on-surface transition-colors">Consumer</a>
+                <a href="verifyProducts.html" class="hover:text-on-surface transition-colors">Verify</a>
+            </div>
+            
+            <!-- Authentic Action / Login -->
+            <div id="auth-container">
+                <a href="login.html" id="login-btn" class="bg-primary-container text-on-primary-container px-6 py-2.5 rounded-xl text-sm font-bold tracking-tight spring-hover flex items-center gap-2">
+                    Connect Node <span class="material-symbols-outlined text-[18px]">login</span>
                 </a>
-                <div class="navbar-menu">
-                    <a href="index.html" class="navbar-link active">Home</a>
-                    <a href="manufacturer.html" class="navbar-link">Manufacturer</a>
-                    <a href="seller.html" class="navbar-link">Seller</a>
-                    <a href="consumer.html" class="navbar-link">Consumer</a>
-                    <a href="verifyProducts.html" class="navbar-link">Verify</a>
-                    <a href="login.html" class="btn btn-primary btn-sm" id="login-btn">
-                        Login <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </nav>
+            </div>
         </div>
-    </header>
+    </nav>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title fade-in-up">Trust in Every Product</h1>
-                <p class="hero-subtitle fade-in-up delay-100">
-                    A blockchain-based verification system ensuring authenticity across the entire supply chain from manufacturer to consumer.
+    <!-- Asymmetric Hero Section -->
+    <main class="relative pt-24 pb-32 px-6 max-w-7xl mx-auto overflow-hidden min-h-[100dvh] flex items-center">
+        <!-- Ambient Background Glow -->
+        <div class="absolute top-1/4 right-0 w-96 h-96 bg-primary-container/10 blur-[100px] rounded-full pointer-events-none"></div>
+        <div class="absolute bottom-0 left-10 w-64 h-64 bg-slate-300/20 blur-[80px] rounded-full pointer-events-none"></div>
+
+        <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-20 items-center relative z-10 w-full">
+            
+            <!-- Left: Human-Centric Typography -->
+            <div class="space-y-10">
+                <div class="inline-flex items-center gap-3 bg-surface-container px-4 py-2 rounded-full border border-outline-variant">
+                    <span class="w-2.5 h-2.5 rounded-full bg-primary-container animate-pulse"></span>
+                    <span class="text-[11px] font-headline font-bold uppercase tracking-[0.2em] text-on-surface-variant">Blockchain Synced • 0ms Latency</span>
+                </div>
+                
+                <h1 class="text-6xl md:text-[5.5rem] font-black font-headline tracking-tighter leading-[0.95] text-on-surface">
+                    Trust in <br />
+                    <span class="text-primary-container italic font-medium">Every Product.</span>
+                </h1>
+                
+                <p class="text-xl text-on-surface-variant max-w-md leading-relaxed">
+                    A transparent neural shell ensuring absolute authenticity across the global supply chain, from creation to your hands.
                 </p>
-                <div class="hero-buttons fade-in-up delay-200">
-                    <a href="verifyProducts.html" class="btn btn-primary">
-                        <i class="fas fa-qrcode"></i> Verify Now
+                
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <a href="verifyProducts.html" class="bg-on-surface text-surface px-8 py-4 rounded-2xl font-bold text-lg flex items-center gap-3 spring-hover diffused-shadow">
+                        <span class="material-symbols-outlined">qr_code_scanner</span> Verify Now
                     </a>
-                    <a href="#how-it-works" class="btn btn-outline-primary">
-                        Learn More <i class="fas fa-chevron-down"></i>
+                    <a href="#how-it-works" class="bg-surface border border-outline-variant text-on-surface px-8 py-4 rounded-2xl font-bold text-lg flex items-center gap-3 spring-hover">
+                        Audit Logic
                     </a>
                 </div>
             </div>
-            
-            <!-- Floating Elements Background -->
-            <div style="position: absolute; top: 20%; left: 10%; opacity: 0.1; animation: float 8s infinite;">
-                <i class="fas fa-cube fa-4x"></i>
+
+            <!-- Right: Agentic Immutable Ledger Simulation (Replaces floating icons) -->
+            <div class="relative w-full">
+                <div class="glass-panel p-8 rounded-[2.5rem] diffused-shadow space-y-6 spring-hover relative z-10">
+                    <div class="flex items-center justify-between border-b border-surface-container pb-5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center border border-outline-variant">
+                                <span class="material-symbols-outlined text-primary-container">lan</span>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-sm font-headline">Ledger Verification</h3>
+                                <p class="text-[10px] font-headline uppercase tracking-wider text-on-surface-variant mt-0.5">Asset ID: #8492-AXL</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-primary-container/30"></span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-primary-container/60"></span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="p-4 bg-surface-container-low rounded-2xl border-l-2 border-on-surface">
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-[16px] text-on-surface-variant">precision_manufacturing</span>
+                                    <span class="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant">Manufacturer</span>
+                                </div>
+                                <span class="font-mono text-[10px] text-primary-container bg-primary-container/10 px-2 py-0.5 rounded">VERIFIED</span>
+                            </div>
+                            <div class="h-1.5 w-full bg-surface-container overflow-hidden rounded-full mb-1">
+                                <div class="h-full w-full bg-on-surface rounded-full"></div>
+                            </div>
+                            <p class="font-mono text-[9px] text-on-surface-variant/70 tracking-tighter">0x7F4...3A9B registered 08:14:02 UTC</p>
+                        </div>
+
+                        <div class="p-4 bg-surface-container-highest/40 rounded-2xl border-l-2 border-primary-container relative overflow-hidden">
+                            <div class="absolute inset-0 data-shimmer"></div>
+                            <div class="relative z-10 flex items-center justify-between mb-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-[16px] text-primary-container">storefront</span>
+                                    <span class="text-[11px] font-bold uppercase tracking-widest text-on-surface">Seller Transfer</span>
+                                </div>
+                                <span class="material-symbols-outlined text-[16px] text-primary-container animate-spin" style="animation-duration: 3s">sync</span>
+                            </div>
+                            <p class="font-mono text-[9px] text-on-surface-variant/70 tracking-tighter">Validating ownership consensus protocols...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="pt-2">
+                        <div class="p-3 border border-primary-container/20 rounded-xl bg-primary-container/5 flex gap-3 items-center">
+                            <span class="material-symbols-outlined text-primary-container">verified_user</span>
+                            <p class="text-[11px] font-medium text-on-surface leading-tight">Authenticity cryptographic chain is unbroken. Ready for consumer claim.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div style="position: absolute; bottom: 20%; right: 10%; opacity: 0.1; animation: float 6s infinite reverse;">
-                <i class="fas fa-shield-alt fa-5x"></i>
+            
+        </div>
+    </main>
+
+    <!-- Asymmetric Bento Features -->
+    <section id="how-it-works" class="bg-surface border-y border-outline-variant py-32">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-20 max-w-2xl">
+                <span class="text-xs font-headline font-black tracking-[0.3em] uppercase text-primary-container mb-4 block">Trust Architecture</span>
+                <h2 class="text-5xl font-black font-headline tracking-tighter leading-tight text-on-surface">
+                    Transparent Supply Engine.
+                </h2>
+                <p class="text-lg text-on-surface-variant leading-relaxed mt-6">
+                    Our immutable ledger maps the entire physical journey of a product into the digital realm, ensuring you get exactly what you paid for.
+                </p>
+            </div>
+            
+            <!-- Bento Grid 2026 Layout -->
+            <div class="grid md:grid-cols-12 gap-6">
+                
+                <!-- Manufacturer (Large Left) -->
+                <div class="md:col-span-8 bg-surface-container-low rounded-[2.5rem] p-10 flex flex-col justify-between group spring-hover diffused-shadow">
+                    <div class="w-16 h-16 rounded-2xl bg-on-surface flex items-center justify-center mb-10 group-hover:bg-primary-container transition-colors duration-500">
+                        <span class="material-symbols-outlined text-surface text-3xl">precision_manufacturing</span>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-black font-headline mb-3 text-on-surface">Origin Inception</h3>
+                        <p class="text-on-surface-variant leading-relaxed">Manufacturers encode products onto the blockchain at creation, stamping an indelible digital fingerprint that serves as absolute zero for authenticity.</p>
+                    </div>
+                </div>
+
+                <!-- Seller (Small Right Top) -->
+                <div class="md:col-span-4 bg-surface-container-low rounded-[2.5rem] p-10 group spring-hover diffused-shadow border border-outline-variant/30">
+                    <div class="w-12 h-12 rounded-2xl bg-surface border border-outline-variant flex items-center justify-center mb-6">
+                        <span class="material-symbols-outlined text-on-surface-variant">local_shipping</span>
+                    </div>
+                    <h3 class="text-xl font-bold font-headline mb-2 text-on-surface">Seller Authority</h3>
+                    <p class="text-sm text-on-surface-variant leading-relaxed">Retailers cryptographically verify inbound stock and log ownership transfer state changes seamlessly.</p>
+                </div>
+
+                <!-- Consumer (Wide Bottom Right) -->
+                <div class="md:col-span-12 bg-primary-container/10 rounded-[2.5rem] p-10 border border-primary-container/20 group spring-hover flex flex-col md:flex-row gap-10 items-center">
+                    <div class="flex-1">
+                        <div class="w-14 h-14 rounded-2xl bg-primary-container flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-on-primary-container text-2xl">verified</span>
+                        </div>
+                        <h3 class="text-2xl font-black font-headline mb-3 text-on-surface">Consumer Truth</h3>
+                        <p class="text-on-surface-variant leading-relaxed max-w-lg">
+                            The terminal phase. Buyers scan the physical product's cipher to audit the complete unalterable history, claiming exclusive digital ownership of their physical asset.
+                        </p>
+                    </div>
+                    
+                    <div class="w-full md:w-auto bg-surface p-4 rounded-2xl diffused-shadow border border-outline-variant flex items-center gap-4">
+                         <div class="w-12 h-12 bg-surface-container rounded-lg flex items-center justify-center">
+                             <span class="material-symbols-outlined text-primary-container">qr_code_2</span>
+                         </div>
+                         <div>
+                             <p class="text-xs font-bold font-headline uppercase text-on-surface-variant">Tap to Verify</p>
+                             <p class="text-xs font-mono text-on-surface">Hash: 0x932...BE14</p>
+                         </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="how-it-works" style="padding: 4rem 0;">
-        <div class="container">
-            <div class="text-center mb-40 fade-in-up">
-                <h2 style="margin-bottom: 1rem;">How It Works</h2>
-                <p style="max-width: 600px; margin: 0 auto;">Our transparent supply chain tracking ensures you get exactly what you paid for.</p>
+    <!-- Deep Minimal Footer -->
+    <footer class="w-full py-16 bg-on-surface text-surface">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12">
+            <!-- Brand -->
+            <div class="md:col-span-2 space-y-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-surface flex items-center justify-center">
+                        <span class="material-symbols-outlined text-on-surface text-sm" data-weight="fill">deployed_code</span>
+                    </div>
+                    <span class="font-headline font-black tracking-tighter text-xl text-surface">BlockVerify</span>
+                </div>
+                <p class="text-surface/50 text-sm max-w-xs leading-relaxed">Liquid logic for a physical world. Ensuring absolute authenticity via cryptographic proof.</p>
             </div>
             
-            <div class="row" style="gap: 2rem; justify-content: center;">
-                <div class="col-4 fade-in-up delay-100">
-                    <div class="card text-center" style="height: 100%;">
-                        <div style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1.5rem;">
-                            <i class="fas fa-industry"></i>
-                        </div>
-                        <h3>Manufacturer</h3>
-                        <p>Manufacturers register products on the blockchain, creating an immutable digital identity for each item.</p>
-                    </div>
-                </div>
-                
-                <div class="col-4 fade-in-up delay-200">
-                    <div class="card text-center" style="height: 100%;">
-                        <div style="font-size: 3rem; color: var(--secondary-color); margin-bottom: 1.5rem;">
-                            <i class="fas fa-store"></i>
-                        </div>
-                        <h3>Seller</h3>
-                        <p>Retailers verify authenticity before accepting stock and transfer ownership upon sale.</p>
-                    </div>
-                </div>
-                
-                <div class="col-4 fade-in-up delay-300">
-                    <div class="card text-center" style="height: 100%;">
-                        <div style="font-size: 3rem; color: var(--success-color); margin-bottom: 1.5rem;">
-                            <i class="fas fa-user-check"></i>
-                        </div>
-                        <h3>Consumer</h3>
-                        <p>Buyers scan the QR code to verify the entire history and claim digital ownership.</p>
-                    </div>
+            <!-- Links -->
+            <div>
+                <h4 class="font-headline font-bold text-sm tracking-widest uppercase text-surface/40 mb-6">Navigation</h4>
+                <ul class="space-y-4">
+                    <li><a href="index.html" class="text-surface/70 hover:text-primary-container transition-colors text-sm">Home Protocol</a></li>
+                    <li><a href="verifyProducts.html" class="text-surface/70 hover:text-primary-container transition-colors text-sm">Verify Interface</a></li>
+                    <li><a href="login.html" class="text-surface/70 hover:text-primary-container transition-colors text-sm">Node Login</a></li>
+                </ul>
+            </div>
+            
+            <!-- Contact -->
+            <div>
+                <h4 class="font-headline font-bold text-sm tracking-widest uppercase text-surface/40 mb-6">Network</h4>
+                <p class="text-surface/70 text-sm mb-4">support@blockverify.net</p>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 rounded-full border border-surface/20 flex items-center justify-center hover:bg-surface/10 hover:border-surface/40 transition-colors">
+                        <span class="material-symbols-outlined text-[18px]">public</span>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full border border-surface/20 flex items-center justify-center hover:bg-surface/10 hover:border-surface/40 transition-colors">
+                        <span class="material-symbols-outlined text-[18px]">code</span>
+                    </a>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer style="background: rgba(15, 23, 42, 0.6); padding: 4rem 0; border-top: 1px solid var(--border-color);">
-        <div class="container">
-            <div class="row">
-                <div class="col-4">
-                    <div class="navbar-brand" style="margin-bottom: 1rem;">
-                        <i class="fas fa-cube"></i> BlockVerify
-                    </div>
-                    <p>Ensuring authenticity in a digital world.</p>
-                </div>
-                <div class="col-4">
-                    <h4>Quick Links</h4>
-                    <ul style="display: flex; flex-direction: column; gap: 0.5rem;">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="verifyProducts.html">Verify Product</a></li>
-                        <li><a href="login.html">Login</a></li>
-                    </ul>
-                </div>
-                <div class="col-4">
-                    <h4>Contact</h4>
-                    <p>support@blockverify.com</p>
-                    <div style="display: flex; gap: 1rem; font-size: 1.5rem; color: var(--primary-color);">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-github"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="text-center mt-40" style="color: var(--text-light); font-size: 0.9rem; margin-top: 3rem;">
-                &copy; 2023 BlockVerify. All rights reserved.
+        
+        <div class="max-w-7xl mx-auto px-6 pt-16 mt-8 border-t border-surface/10 flex justify-between items-center">
+            <p class="font-mono text-xs text-surface/30">© 2026 BlockVerify System. Human-centric by design.</p>
+            <div class="flex items-center gap-2 text-surface/30">
+                <span class="w-2 h-2 rounded-full bg-primary-container"></span>
+                <span class="font-mono text-xs">Systems Operational</span>
             </div>
         </div>
     </footer>
 
+    <!-- Scripts -->
     <script src="assets/js/app.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        // Initialize GSAP ScrollTrigger
-        gsap.registerPlugin(ScrollTrigger);
-
-        // Check login status
+        // Check login status & Inject Modern 2026 Dropdown
         $(document).ready(function() {
             const user = JSON.parse(sessionStorage.getItem('currentUser'));
             if (user) {
-                const loginBtn = $('#login-btn');
+                const loginBtn = $('#auth-container');
                 let dashboardUrl = '#';
                 
                 if (user.user_type === 'Manufacturer') dashboardUrl = 'manufacturer.html';
@@ -154,42 +330,51 @@
                 else if (user.user_type === 'Admin') dashboardUrl = 'admin.html';
                 
                 if (dashboardUrl !== '#') {
-                    // Create dropdown structure
+                    // Refined 2026 Tailwind Dropdown (Liquid Glass style)
                     const dropdownHtml = `
-                        <div class="dropdown">
-                            <button class="btn btn-secondary" id="profile-dropdown-btn" style="min-width: 150px;">
-                                <i class="fas fa-user-circle"></i> ${user.name || user.user_type} <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 0.5rem;"></i>
+                        <div class="relative group" id="profile-dropdown-container">
+                            <button id="profile-dropdown-btn" class="bg-surface glass-panel border border-outline-variant text-on-surface px-5 py-2 rounded-xl text-sm font-bold tracking-tight spring-hover flex items-center gap-3">
+                                <div class="w-6 h-6 rounded-md bg-on-surface/5 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-[14px]">person</span>
+                                </div>
+                                ${user.name || user.user_type} 
+                                <span class="material-symbols-outlined text-[16px] text-on-surface-variant transition-transform duration-200 group-hover:rotate-180">expand_more</span>
                             </button>
-                            <div class="dropdown-menu" id="profile-dropdown-menu">
-                                <a href="${dashboardUrl}" class="dropdown-item">
-                                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                            
+                            <!-- Dropdown Menu -->
+                            <div id="profile-dropdown-menu" class="absolute right-0 top-full mt-3 w-48 glass-panel rounded-2xl p-2 opacity-0 invisible translate-y-2 transition-all duration-300 shadow-xl border border-outline-variant z-50">
+                                <a href="${dashboardUrl}" class="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl hover:bg-surface-container text-sm font-semibold text-on-surface transition-colors">
+                                    <span class="material-symbols-outlined text-[18px] text-on-surface-variant">dashboard</span> Dashboard
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item" id="logout-btn" style="color: var(--danger-color);">
-                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                <div class="h-px bg-outline-variant/30 my-1 mx-2"></div>
+                                <a href="#" id="logout-btn" class="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl hover:bg-red-50 text-sm font-semibold text-red-600 transition-colors group">
+                                    <span class="material-symbols-outlined text-[18px] text-red-400 group-hover:text-red-600">logout</span> Disconnect
                                 </a>
                             </div>
                         </div>
                     `;
                     
-                    // Replace login button with dropdown
-                    loginBtn.replaceWith(dropdownHtml);
+                    loginBtn.html(dropdownHtml);
                     
-                    // Toggle dropdown
+                    // Toggle Logic
+                    let isOpen = false;
                     $('#profile-dropdown-btn').on('click', function(e) {
                         e.stopPropagation();
-                        $('#profile-dropdown-menu').toggleClass('show');
+                        isOpen = !isOpen;
+                        const menu = $('#profile-dropdown-menu');
+                        if(isOpen) {
+                            menu.removeClass('opacity-0 invisible translate-y-2').addClass('opacity-100 visible translate-y-0');
+                        } else {
+                            menu.removeClass('opacity-100 visible translate-y-0').addClass('opacity-0 invisible translate-y-2');
+                        }
                     });
                     
-                    // Close dropdown when clicking outside
                     $(document).on('click', function() {
-                        $('#profile-dropdown-menu').removeClass('show');
+                        isOpen = false;
+                        $('#profile-dropdown-menu').removeClass('opacity-100 visible translate-y-0').addClass('opacity-0 invisible translate-y-2');
                     });
                     
-                    // Prevent closing when clicking inside dropdown
-                    $('#profile-dropdown-menu').on('click', function(e) {
-                        e.stopPropagation();
-                    });
+                    $('#profile-dropdown-menu').on('click', function(e) { e.stopPropagation(); });
                     
                     // Handle Logout
                     $('#logout-btn').on('click', function(e) {
@@ -199,32 +384,6 @@
                     });
                 }
             }
-        });
-
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId === '#' || targetId === '') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
-            });
         });
     </script>
 </body>
